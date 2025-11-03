@@ -7,7 +7,6 @@
 <style>
   body {
     font-family: Arial, sans-serif;
-    /* Colorful multi-color gradient background */
     background: linear-gradient(270deg, #FF6B6B, #FFD93D, #6BCB77, #4D96FF, #9B59B6, #FF8C00);
     background-size: 1200% 1200%;
     animation: gradientMove 20s ease infinite;
@@ -27,12 +26,11 @@
     100% { background-position: 0% 50%; }
   }
 
-  /* Heading in black rectangle with white text */
   h1 {
     background: #000000;
     color: #ffffff;
     font-weight: bold;
-    font-size: 64px; /* bigger heading for TV */
+    font-size: 64px;
     padding: 30px 60px;
     border-radius: 12px;
     margin-bottom: 50px;
@@ -44,25 +42,24 @@
   .container {
     display: flex;
     align-items: center;
-    gap: 40px; /* more space for bigger images */
+    gap: 40px;
     position: relative;
   }
 
-  /* Character Image */
   .character {
-    width: 350px; /* bigger character for TV */
+    width: 350px;
     position: relative;
     right: -400px;
     opacity: 0;
   }
 
-  /* Services Number Box */
+  /* Services Number Box - X2 bigger */
   .sales-box {
     background: #ffffff;
-    color: #007BFF; /* Blue text */
-    font-size: 48px; /* bigger font */
+    color: #007BFF;
+    font-size: 96px; /* doubled from 48px */
     font-weight: bold;
-    padding: 30px 50px; /* bigger padding */
+    padding: 60px 100px; /* doubled from 30px 50px */
     border-radius: 16px;
     box-shadow: 0 6px 14px rgba(0,0,0,0.3);
     opacity: 0;
@@ -70,7 +67,6 @@
     transition: all 0.8s;
   }
 
-  /* Animations */
   .slideCharacter {
     animation: slideCharacter 1s forwards;
   }
@@ -88,28 +84,22 @@
 </head>
 <body>
 
-<!-- Heading -->
 <h1 id="team-heading">ALL STARS</h1>
 
 <div class="container">
-  <!-- Character Image -->
   <img id="character-img" class="character" src="https://i.imgur.com/LJh1L8a.png" alt="Character">
-
-  <!-- Services Number Box -->
   <div class="sales-box" id="sales-box">89 Services</div>
 </div>
 
 <script>
-  // ======= Configuration (edit here quickly) =======
   const characters = [
     { heading: "ALL STARS", image: "https://i.imgur.com/LJh1L8a.png", sales: "89 Services" },
     { heading: "Team Selma", image: "https://i.imgur.com/F335QgY.png", sales: "50 Services" },
     { heading: "Team Ansou", image: "https://i.imgur.com/aCe7tcs.png", sales: "40 Services" }
   ];
 
-  const displayDuration = 5000; // each character shows for 5 seconds
+  const displayDuration = 5000;
 
-  // ======= DOM Elements =======
   const headingEl = document.getElementById("team-heading");
   const characterEl = document.getElementById("character-img");
   const salesBoxEl = document.getElementById("sales-box");
@@ -119,7 +109,6 @@
   function showCharacter(index) {
     const character = characters[index];
 
-    // Hide first for transition
     headingEl.style.opacity = 0;
     characterEl.classList.remove("slideCharacter");
     salesBoxEl.classList.remove("slideSales");
@@ -132,13 +121,11 @@
       headingEl.style.opacity = 1;
       characterEl.classList.add("slideCharacter");
       salesBoxEl.classList.add("slideSales");
-    }, 200); // small delay for smooth transition
+    }, 200);
   }
 
-  // Initial display
   showCharacter(currentIndex);
 
-  // Loop through characters
   setInterval(() => {
     currentIndex = (currentIndex + 1) % characters.length;
     showCharacter(currentIndex);
