@@ -3,7 +3,11 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Dynamic Podium with Ratios</title>
+  <title>Dynamic Moving Podium</title>
+
+  <!-- ✅ Stylish Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
+
   <style>
     body {
       margin: 0;
@@ -68,7 +72,7 @@
       left: 50%;
       transform: translateX(-50%) translateY(-10px);
       width: 200px;
-      transition: all 1s ease;
+      transition: bottom 1s ease, transform 1s ease;
     }
 
     .character img {
@@ -79,14 +83,19 @@
 
     .name {
       margin-top: 10px;
-      font-size: 18px;
+      font-size: 24px;
+      color: #000;
+      font-family: 'Bebas Neue', sans-serif;
+      font-weight: 700;
+      letter-spacing: 1px;
     }
 
     .stats {
-      font-size: 14px;
-      color: #fff;
+      font-size: 22px;
+      color: #000000;
       opacity: 0.85;
       margin-top: 5px;
+      font-weight: bold;
     }
 
     h1 {
@@ -97,6 +106,8 @@
       color: white;
       font-size: 32px;
       text-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
+      font-family: 'Bebas Neue', sans-serif;
+      letter-spacing: 2px;
     }
   </style>
 </head>
@@ -107,17 +118,29 @@
   </div>
 
   <script>
-    let podiumData = [
-      { name: 'Team Mehdi', image: 'https://imgur.com/bu2E0VL.png', ratio: 20 },
-      { name: 'Team Selma', image: 'https://imgur.com/5t6MF4o.png', ratio: 60 },
-      { name: 'Team Ansou', image: 'https://imgur.com/1yPu5ZP.png', ratio: 40 }
+    /****************************************************
+     🏆 EASY CONTROL CENTER
+     👉 Just edit the ratios here
+    ****************************************************/
+    const ratios = {
+      mehdi: 50,
+      selma: 70,
+      ansou: 40
+    };
+
+    // Team data (you can add more)
+    const teams = [
+      { id: 'mehdi', name: 'Team Mehdi', image: 'https://imgur.com/bu2E0VL.png' },
+      { id: 'selma', name: 'Team Selma', image: 'https://imgur.com/5t6MF4o.png' },
+      { id: 'ansou', name: 'Team Ansou', image: 'https://imgur.com/1yPu5ZP.png' }
     ];
 
     function renderPodium() {
       const podium = document.getElementById('podium');
       podium.innerHTML = '';
 
-      const sorted = podiumData.sort((a, b) => b.ratio - a.ratio);
+      const data = teams.map(t => ({ ...t, ratio: ratios[t.id] }));
+      const sorted = data.sort((a, b) => b.ratio - a.ratio);
 
       sorted.forEach((team, i) => {
         const step = document.createElement('div');
@@ -152,19 +175,23 @@
         setTimeout(() => {
           char.style.animation = 'jump 1s ease';
           setTimeout(() => { char.style.animation = ''; }, 1000);
-        }, index * 1000);
+        }, index * 500);
       });
     }
 
     // Initial render
     renderPodium();
 
-    // Example: change ratios and update positions manually
-    setTimeout(() => {
-      podiumData[0].ratio = 50;
-      podiumData[1].ratio = 60;
-      podiumData[2].ratio = 40;
+    function updatePodium() {
       renderPodium();
+    }
+
+    // Example auto change
+    setTimeout(() => {
+      ratios.mehdi = 50;
+      ratios.selma = 50;
+      ratios.ansou = 50;
+      updatePodium();
     }, 5000);
   </script>
 </body>
