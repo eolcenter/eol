@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Character Services Loop Animation</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background: linear-gradient(270deg, #FF6B6B, #FFD93D, #6BCB77, #4D96FF, #9B59B6, #FF8C00);
+    background-size: 1200% 1200%;
+    animation: gradientMove 20s ease infinite;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    overflow: hidden;
+  }
+
+  @keyframes gradientMove {
+    0% { background-position: 0% 50%; }
+    25% { background-position: 50% 50%; }
+    50% { background-position: 100% 50%; }
+    75% { background-position: 50% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+
+  h1 {
+    background: #000000;
+    color: #ffffff;
+    font-weight: bold;
+    font-size: 64px;
+    padding: 30px 60px;
+    border-radius: 12px;
+    margin-bottom: 20px;
+    text-align: center;
+    opacity: 0;
+    transition: opacity 0.5s;
+  }
+
+  /* Progress bar container */
+  .progress-container {
+    width: 60%;
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 20px;
+    margin-bottom: 50px;
+    height: 30px;
+    overflow: hidden;
+  }
+
+  /* Progress bar fill */
+  .progress-bar {
+    height: 100%;
+    width: 0%;
+    background: #007BFF;
+    border-radius: 20px;
+    text-align: center;
+    color: white;
+    font-weight: bold;
+    line-height: 30px;
+    transition: width 0.8s ease;
+  }
+
+  .container {
+    display: flex;
+    align-items: center;
+    gap: 40px;
+    position: relative;
+  }
+
+  .character {
+    width: 350px;
+    position: relative;
+    right: -400px;
+    opacity: 0;
+  }
+
+  .sales-box {
+    background: #ffffff;
+    color: #007BFF;
+    font-size: 96px;
+    font-weight: bold;
+    padding: 60px 100px;
+    border-radius: 16px;
+    box-shadow: 0 6px 14px rgba(0,0,0,0.3);
+    opacity: 0;
+    transform: translateX(120px);
+    transition: all 0.8s;
+  }
+
+  .slideCharacter {
+    animation: slideCharacter 1s forwards;
+  }
+
+  .slideSales {
+    transform: translateX(0);
+    opacity: 1;
+  }
+
+  @keyframes slideCharacter {
+    0% { right: -400px; opacity: 0; }
+    100% { right: 0px; opacity: 1; }
+  }
+</style>
+</head>
+<body>
+
+<h1 id="team-heading">ALL STARS</h1>
+
+<!-- Progress Bar -->
+<div class="progress-container">
+  <div class="progress-bar" id="progress-bar">0%</div>
+</div>
+
+<div class="container">
+  <img id="character-img" class="character" src="https://i.imgur.com/LJh1L8a.png" alt="Character">
+  <div class="sales-box" id="sales-box">89 Services</div>
+</div>
+
+<script>
+  // Configuration
+  const characters = [
+    { heading: "ALL STARS", image: "https://i.imgur.com/LJh1L8a.png", sales: 89, max: 350 },
+    { heading: "Team Selma", image: "https://i.imgur.com/F335QgY.png", sales: 50, max: 250 },
+    { heading: "Team Ansou", image: "https://i.imgur.com/aCe7tcs.png", sales: 40, max: 100 }
+  ];
+
+  const displayDuration = 5000;
+
+  const headingEl = document.getElementById("team-heading");
+  const characterEl = document.getElementById("character-img");
+  const salesBoxEl = document.getElementById("sales-box");
+  const progressBarEl = document.getElementById("progress-bar");
+
+  let currentIndex = 0;
+
+  function showCharacter(index) {
+    const character = characters[index];
+
+    headingEl.style.opacity = 0;
+    characterEl.classList.remove("slideCharacter");
+    salesBoxEl.classList.remove("slideSales");
+
+    setTimeout(() => {
+      headingEl.textContent = character.heading;
+      characterEl.src = character.image;
+      salesBoxEl.textContent = `${character.sales} Services`;
+
+      // Update progress bar
+      const percentage = Math.min(100, Math.round((character.sales / character.max) * 100));
+      progressBarEl.style.width = percentage + '%';
+      progressBarEl.textContent = `${percentage}%`;
+
+      headingEl.style.opacity = 1;
+      characterEl.classList.add("slideCharacter");
+      salesBoxEl.classList.add("slideSales");
+    }, 200);
+  }
+
+  showCharacter(currentIndex);
+
+  setInterval(() => {
+    currentIndex = (currentIndex + 1) % characters.length;
+    showCharacter(currentIndex);
+  }, displayDuration);
+</script>
+
+</body>
+</html>
