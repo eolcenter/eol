@@ -40,11 +40,9 @@
   <iframe id="frame1" class="active"></iframe>
   <iframe id="frame2" class="inactive"></iframe>
   <iframe id="frame3" class="inactive"></iframe>
-  <iframe id="frame4" class="inactive"></iframe>
 
   <script>
     const pages = [
-      "https://eolcenter.github.io/eol/eol.html", // new first page
       "https://eolcenter.github.io/eol/course.html",
       "https://eolcenter.github.io/eol/podium.html",
       "https://eolcenter.github.io/eol/resultat.html"
@@ -53,16 +51,13 @@
     const frames = [
       document.getElementById("frame1"),
       document.getElementById("frame2"),
-      document.getElementById("frame3"),
-      document.getElementById("frame4")
+      document.getElementById("frame3")
     ];
 
     let index = 0; // current page index
 
-    // Load all frames initially
-    frames.forEach((frame, i) => {
-      frame.src = pages[i] + "?t=" + Date.now(); // force reload
-    });
+    // Load first page
+    frames[0].src = pages[0];
 
     function switchPage() {
       // Hide all frames first
@@ -70,16 +65,13 @@
 
       // Move to next page
       index = (index + 1) % pages.length;
-      frames[index].classList.add("active");
+      const nextFrame = frames[index];
+      nextFrame.src = pages[index] + "?t=" + Date.now(); // force reload
+      nextFrame.classList.add("active");
     }
 
-    // First page (new intro) shows for 6 seconds
-    setTimeout(() => {
-      switchPage(); // switch to second page after 6s
-
-      // After that, continue with remaining pages every 15s
-      setInterval(switchPage, 15000);
-    }, 6000);
+    // Switch every 15 seconds
+    setInterval(switchPage, 15000);
   </script>
 
 </body>
