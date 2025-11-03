@@ -1,191 +1,202 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Dynamic Moving Podium</title>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Dynamic Moving Podium</title>
 
-  <!-- ✅ Stylish Font -->
-  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
+<!-- ✅ Stylish Font -->
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
 
-  <style>
-    body {
-      margin: 0;
-      height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      overflow: hidden;
-      background: linear-gradient(-45deg, #1a2a6c, #b21f1f, #fdbb2d, #21d4fd, #b721ff);
-      background-size: 400% 400%;
-      animation: gradientMove 12s ease infinite;
-      font-family: 'Poppins', sans-serif;
-    }
+<style>
+body {
+  margin: 0;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  background: linear-gradient(-45deg, #1a2a6c, #b21f1f, #fdbb2d, #21d4fd, #b721ff);
+  background-size: 400% 400%;
+  animation: gradientMove 12s ease infinite;
+  font-family: 'Poppins', sans-serif;
+}
 
-    @keyframes gradientMove {
-      0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
-    }
+@keyframes gradientMove {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
 
-    @keyframes jump {
-      0%, 100% { transform: translateX(-50%) translateY(-10px); }
-      50% { transform: translateX(-50%) translateY(-80px); }
-    }
+@keyframes jump {
+  0%, 100% { transform: translateX(-50%) translateY(-10px); }
+  50% { transform: translateX(-50%) translateY(-120px); }
+}
 
-    .scene {
-      position: relative;
-      width: 900px;
-      height: 600px;
-      display: flex;
-      justify-content: center;
-      align-items: flex-end;
-    }
+h1 {
+  position: absolute;
+  top: 20px;
+  width: 100%;
+  text-align: center;
+  color: white;
+  font-size: 80px; /* Bigger */
+  text-shadow: 0 4px 30px rgba(0, 0, 0, 0.7);
+  font-family: 'Bebas Neue', sans-serif;
+  letter-spacing: 3px;
+}
 
-    .podium {
-      display: flex;
-      justify-content: center;
-      align-items: flex-end;
-      gap: 40px;
-      width: 100%;
-      transition: all 1s ease;
-    }
+.scene {
+  position: relative;
+  width: 90vw; /* Full width responsive */
+  max-width: 1400px;
+  height: 70vh;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+}
 
-    .step {
-      position: relative;
-      width: 200px;
-      border-radius: 10px;
-      text-align: center;
-      color: white;
-      font-weight: bold;
-      transition: all 1s ease;
-      box-shadow: inset 0 -10px 30px rgba(0, 0, 0, 0.3), 0 15px 30px rgba(0, 0, 0, 0.4);
-    }
+.podium {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  gap: 60px; /* bigger gaps for TV */
+  width: 100%;
+  transition: all 1s ease;
+}
 
-    .gold { background: linear-gradient(180deg, #ffdf00, #c5a500); height: 180px; }
-    .silver { background: linear-gradient(180deg, #c0c0c0, #8f8f8f); height: 130px; }
-    .bronze { background: linear-gradient(180deg, #cd7f32, #8b4513); height: 100px; }
+.step {
+  position: relative;
+  width: 250px; /* bigger steps */
+  border-radius: 15px;
+  text-align: center;
+  color: white;
+  font-weight: bold;
+  transition: all 1s ease;
+  box-shadow: inset 0 -10px 40px rgba(0, 0, 0, 0.3), 0 20px 40px rgba(0, 0, 0, 0.4);
+}
 
-    .character {
-      position: absolute;
-      bottom: 100%;
-      left: 50%;
-      transform: translateX(-50%) translateY(-10px);
-      width: 200px;
-      transition: bottom 1s ease, transform 1s ease;
-    }
+.gold { background: linear-gradient(180deg, #ffdf00, #c5a500); height: 220px; }
+.silver { background: linear-gradient(180deg, #c0c0c0, #8f8f8f); height: 170px; }
+.bronze { background: linear-gradient(180deg, #cd7f32, #8b4513); height: 140px; }
 
-    .character img {
-      width: 100%;
-      height: auto;
-      object-fit: contain;
-    }
+.character {
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%) translateY(-10px);
+  width: 250px; /* bigger characters */
+}
 
-    .name {
-      margin-top: 10px;
-      font-size: 24px;
-      color: #000;
-      font-family: 'Bebas Neue', sans-serif;
-      font-weight: 700;
-      letter-spacing: 1px;
-    }
+.character img {
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+}
 
-    .stats {
-      font-size: 22px;
-      color: #000000;
-      opacity: 0.85;
-      margin-top: 5px;
-      font-weight: bold;
-    }
+.name {
+  margin-top: 10px;
+  font-size: 36px; /* bigger name */
+  color: #000;
+  font-family: 'Bebas Neue', sans-serif;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
 
-    h1 {
-      position: absolute;
-      top: 40px;
-      width: 100%;
-      text-align: center;
-      color: white;
-      font-size: 32px;
-      text-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
-      font-family: 'Bebas Neue', sans-serif;
-      letter-spacing: 2px;
-    }
-  </style>
+.stats {
+  font-size: 30px; /* bigger stats */
+  color: #000000;
+  opacity: 0.85;
+  margin-top: 5px;
+  font-weight: bold;
+}
+
+/* Responsive adjustments */
+@media (max-width: 1200px) {
+  .step { width: 200px; }
+  .character { width: 200px; }
+  .name { font-size: 28px; }
+  .stats { font-size: 24px; }
+  h1 { font-size: 60px; }
+}
+
+@media (max-width: 768px) {
+  .step { width: 150px; }
+  .character { width: 150px; }
+  .name { font-size: 22px; }
+  .stats { font-size: 18px; }
+  h1 { font-size: 40px; }
+}
+</style>
 </head>
 <body>
-  <h1>🏅 CLASSEMENT 🏅</h1>
-  <div class="scene">
-    <div class="podium" id="podium"></div>
-  </div>
+<h1>🏅 CLASSEMENT 🏅</h1>
+<div class="scene">
+  <div class="podium" id="podium"></div>
+</div>
 
-  <script>
-    /****************************************************
-     🏆 EASY CONTROL CENTER
-    ****************************************************/
-    const ratios = {
-      mehdi: 20,
-      selma: 70,
-      ansou: 40
-    };
+<script>
+const ratios = {
+  mehdi: 20,
+  selma: 70,
+  ansou: 40
+};
 
-    // Team data (you can add more teams)
-    const teams = [
-      { id: 'mehdi', name: 'Team Mehdi', image: 'https://imgur.com/LJh1L8a.png' },
-      { id: 'selma', name: 'Team Selma', image: 'https://imgur.com/F335QgY.png' },
-      { id: 'ansou', name: 'Team Ansou', image: 'https://imgur.com/aCe7tcs.png' }
-    ];
+const teams = [
+  { id: 'mehdi', name: 'Team Mehdi', image: 'https://i.imgur.com/LJh1L8a.png' },
+  { id: 'selma', name: 'Team Selma', image: 'https://i.imgur.com/F335QgY.png' },
+  { id: 'ansou', name: 'Team Ansou', image: 'https://i.imgur.com/aCe7tcs.png' }
+];
 
-    function renderPodium() {
-      const podium = document.getElementById('podium');
-      podium.innerHTML = '';
+function renderPodium() {
+  const podium = document.getElementById('podium');
+  podium.innerHTML = '';
 
-      const data = teams.map(t => ({ ...t, ratio: ratios[t.id] }));
-      const sorted = data.sort((a, b) => b.ratio - a.ratio);
+  const data = teams.map(t => ({ ...t, ratio: ratios[t.id] }));
+  const sorted = data.sort((a, b) => b.ratio - a.ratio);
 
-      sorted.forEach((team, i) => {
-        const step = document.createElement('div');
-        if (i === 0) step.className = 'step gold';
-        else if (i === 1) step.className = 'step silver';
-        else step.className = 'step bronze';
+  sorted.forEach((team, i) => {
+    const step = document.createElement('div');
+    if (i === 0) step.className = 'step gold';
+    else if (i === 1) step.className = 'step silver';
+    else step.className = 'step bronze';
 
-        const character = document.createElement('div');
-        character.className = 'character';
-        character.innerHTML = `<img src="${team.image}" alt="${team.name}">`;
+    const character = document.createElement('div');
+    character.className = 'character';
+    character.innerHTML = `<img src="${team.image}" alt="${team.name}">`;
 
-        const name = document.createElement('div');
-        name.className = 'name';
-        name.textContent = team.name;
+    const name = document.createElement('div');
+    name.className = 'name';
+    name.textContent = team.name;
 
-        const stats = document.createElement('div');
-        stats.className = 'stats';
-        // ✅ Changed text to show progress instead of ratio
-        stats.textContent = `${team.ratio}% progress`;
+    const stats = document.createElement('div');
+    stats.className = 'stats';
+    stats.textContent = `${team.ratio}% progress`;
 
-        step.appendChild(character);
-        step.appendChild(name);
-        step.appendChild(stats);
-        podium.appendChild(step);
-      });
+    step.appendChild(character);
+    step.appendChild(name);
+    step.appendChild(stats);
+    podium.appendChild(step);
+  });
 
-      animateJump();
-    }
+  animateJump();
+}
 
-    function animateJump() {
-      const characters = document.querySelectorAll('.character');
-      characters.forEach((char, index) => {
-        setTimeout(() => {
-          char.style.animation = 'jump 1s ease';
-          setTimeout(() => { char.style.animation = ''; }, 1000);
-        }, index * 500);
-      });
-    }
+function animateJump() {
+  const characters = document.querySelectorAll('.character');
+  characters.forEach((char, index) => {
+    setTimeout(() => {
+      char.style.animation = 'jump 1s ease';
+      setTimeout(() => { char.style.animation = ''; }, 1000);
+    }, index * 500);
+  });
+}
 
-    // Initial render
-    renderPodium();
+// Initial render
+renderPodium();
 
-    // Optional: call updatePodium() after changing ratios
-    function updatePodium() {
-      renderPodium();
-    }
-  </script>
+function updatePodium() {
+  renderPodium();
+}
+</script>
 </body>
 </html>
