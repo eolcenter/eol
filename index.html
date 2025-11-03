@@ -39,6 +39,7 @@
 
   <iframe id="frame1" class="active"></iframe>
   <iframe id="frame2" class="inactive"></iframe>
+  <iframe id="frame3" class="inactive"></iframe>
 
   <script>
     const pages = [
@@ -47,30 +48,26 @@
       "https://eolcenter.github.io/eol/resultat.html"
     ];
 
-    let index = 0;
-    let active = 1; // 1 = frame1, 2 = frame2
-    const frame1 = document.getElementById("frame1");
-    const frame2 = document.getElementById("frame2");
+    const frames = [
+      document.getElementById("frame1"),
+      document.getElementById("frame2"),
+      document.getElementById("frame3")
+    ];
+
+    let index = 0; // current page index
 
     // Load first page
-    frame1.src = pages[0];
+    frames[0].src = pages[0];
 
     function switchPage() {
+      // Hide all frames first
+      frames.forEach(f => f.classList.remove("active"));
+
       // Move to next page
       index = (index + 1) % pages.length;
-      const nextUrl = pages[index] + "?t=" + Date.now(); // force reload
-
-      // Determine which iframe to use
-      const nextFrame = active === 1 ? frame2 : frame1;
-      const currentFrame = active === 1 ? frame1 : frame2;
-
-      // Load next page and fade in
-      nextFrame.src = nextUrl;
+      const nextFrame = frames[index];
+      nextFrame.src = pages[index] + "?t=" + Date.now(); // force reload
       nextFrame.classList.add("active");
-      currentFrame.classList.remove("active");
-
-      // Switch active reference
-      active = active === 1 ? 2 : 1;
     }
 
     // Switch every 15 seconds
