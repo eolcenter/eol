@@ -3,14 +3,14 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Auto Diaporama Live</title>
+  <title>Live Diaporama Viewer</title>
   <style>
     html, body {
       margin: 0;
       padding: 0;
       height: 100%;
       width: 100%;
-      background-color: #000;
+      background: #000;
       overflow: hidden;
     }
 
@@ -21,23 +21,24 @@
       width: 100%;
       height: 100%;
       border: none;
-      transition: opacity 1s ease-in-out;
-    }
-
-    iframe.hidden {
+      transition: opacity 1s ease;
       opacity: 0;
     }
 
-    iframe.visible {
+    iframe.active {
       opacity: 1;
+      z-index: 1;
+    }
+
+    iframe.inactive {
+      z-index: 0;
     }
   </style>
 </head>
 <body>
 
-  <!-- Two iframes for smooth fade switching -->
-  <iframe id="frame1" class="visible"></iframe>
-  <iframe id="frame2" class="hidden"></iframe>
+  <iframe id="frame1" class="active"></iframe>
+  <iframe id="frame2" class="inactive"></iframe>
 
   <script>
     const pages = [
@@ -45,38 +46,31 @@
       "https://eolcenter.github.io/eol/podium.html"
     ];
 
-    let currentIndex = 0;
-    let activeFrame = 1;
-
-    // Elements
+    let index = 0;
+    let active = 1;
     const frame1 = document.getElementById("frame1");
     const frame2 = document.getElementById("frame2");
 
     // Load first page
     frame1.src = pages[0];
 
-    // Function to switch pages every 15 seconds
-    setInterval(() => {
-      currentIndex = (currentIndex + 1) % pages.length;
+    // Function to switch pages
+    function switchPage() {
+      index = (index + 1) % pages.length;
+      const nextUrl = pages[index] + "?t=" + Date.now(); // force reload
+      const nextFrame = active === 1 ? frame2 : frame1;
+      const currentFrame = active === 1 ? frame1 : frame2;
 
-      const nextSrc = pages[currentIndex] + "?t=" + Date.now(); // force refresh
+      nextFrame.src = nextUrl;
+      nextFrame.classList.add("active");
+      currentFrame.classList.remove("active");
 
-      if (activeFrame === 1) {
-        frame2.src = nextSrc;
-        frame2.classList.remove("hidden");
-        frame2.classList.add("visible");
-        frame1.classList.remove("visible");
-        frame1.classList.add("hidden");
-        activeFrame = 2;
-      } else {
-        frame1.src = nextSrc;
-        frame1.classList.remove("hidden");
-        frame1.classList.add("visible");
-        frame2.classList.remove("visible");
-        frame2.classList.add("hidden");
-        activeFrame = 1;
-      }
-    }, 15000); // 15 seconds
+      // Switch active reference
+      active = active === 1 ? 2 : 1;
+    }
+
+    // Switch every 15s
+    setInterval(switchPage, 15000);
   </script>
 
 </body>
