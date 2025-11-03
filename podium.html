@@ -39,7 +39,7 @@ h1 {
   width: 100%;
   text-align: center;
   color: white;
-  font-size: 80px; /* Bigger */
+  font-size: 80px;
   text-shadow: 0 4px 30px rgba(0, 0, 0, 0.7);
   font-family: 'Bebas Neue', sans-serif;
   letter-spacing: 3px;
@@ -47,8 +47,8 @@ h1 {
 
 .scene {
   position: relative;
-  width: 90vw; /* Full width responsive */
-  max-width: 1400px;
+  width: 90vw;
+  max-width: 1600px;
   height: 70vh;
   display: flex;
   justify-content: center;
@@ -59,14 +59,14 @@ h1 {
   display: flex;
   justify-content: center;
   align-items: flex-end;
-  gap: 60px; /* bigger gaps for TV */
+  gap: 160px; /* Max space between characters */
   width: 100%;
   transition: all 1s ease;
 }
 
 .step {
   position: relative;
-  width: 250px; /* bigger steps */
+  width: 250px;
   border-radius: 15px;
   text-align: center;
   color: white;
@@ -84,7 +84,7 @@ h1 {
   bottom: 100%;
   left: 50%;
   transform: translateX(-50%) translateY(-10px);
-  width: 250px; /* bigger characters */
+  width: 250px;
 }
 
 .character img {
@@ -95,7 +95,7 @@ h1 {
 
 .name {
   margin-top: 10px;
-  font-size: 36px; /* bigger name */
+  font-size: 36px;
   color: #000;
   font-family: 'Bebas Neue', sans-serif;
   font-weight: 700;
@@ -103,7 +103,7 @@ h1 {
 }
 
 .stats {
-  font-size: 30px; /* bigger stats */
+  font-size: 30px;
   color: #000000;
   opacity: 0.85;
   margin-top: 5px;
@@ -111,15 +111,26 @@ h1 {
 }
 
 /* Responsive adjustments */
+@media (max-width: 1600px) {
+  .podium { gap: 120px; }
+  .step { width: 220px; }
+  .character { width: 220px; }
+  .name { font-size: 32px; }
+  .stats { font-size: 26px; }
+  h1 { font-size: 70px; }
+}
+
 @media (max-width: 1200px) {
-  .step { width: 200px; }
-  .character { width: 200px; }
+  .podium { gap: 90px; }
+  .step { width: 180px; }
+  .character { width: 180px; }
   .name { font-size: 28px; }
   .stats { font-size: 24px; }
   h1 { font-size: 60px; }
 }
 
 @media (max-width: 768px) {
+  .podium { gap: 50px; }
   .step { width: 150px; }
   .character { width: 150px; }
   .name { font-size: 22px; }
