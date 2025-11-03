@@ -157,7 +157,8 @@
 
         const stats = document.createElement('div');
         stats.className = 'stats';
-        stats.textContent = `${team.ratio}% ratio`;
+        // ✅ Changed text to show progress instead of ratio
+        stats.textContent = `${team.ratio}% progress`;
 
         step.appendChild(character);
         step.appendChild(name);
