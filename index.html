@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Live Diaporama</title>
+  <style>
+    body, html {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      width: 100%;
+      background: #000;
+      color: #fff;
+      overflow: hidden;
+      font-family: sans-serif;
+    }
+    #viewer {
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background: #000;
+    }
+    .fade {
+      animation: fadein 1s ease-in-out;
+    }
+    @keyframes fadein {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+  </style>
+</head>
+<body>
+  <div id="viewer">Loading...</div>
+
+  <script>
+    const pages = [
+      "https://raw.githubusercontent.com/eolcenter/eol/refs/heads/main/course.html",
+      "https://raw.githubusercontent.com/eolcenter/eol/refs/heads/main/podium.html"
+    ];
+
+    let currentIndex = 0;
+    const viewer = document.getElementById("viewer");
+
+    // Function to load a page's HTML content
+    async function loadPage(url) {
+      try {
+        const res = await fetch(url + '?t=' + Date.now(), { cache: 'no-store' });
+        const html = await res.text();
+        viewer.innerHTML = html;
+        viewer.classList.add("fade");
+        setTimeout(() => viewer.classList.remove("fade"), 1000);
+      } catch (err) {
+        viewer.innerHTML = `<p style="color:red;text-align:center;">Error loading ${url}</p>`;
+      }
+    }
+
+    // Initial load
+    loadPage(pages[currentIndex]);
+
+    // Switch pages every 15 seconds
+    setInterval(() => {
+      currentIndex = (currentIndex + 1) % pages.length;
+      loadPage(pages[currentIndex]);
+    }, 15000);
+
+    // Refresh current page content every 10 seconds (live update)
+    setInterval(() => {
+      loadPage(pages[currentIndex]);
+    }, 10000);
+  </script>
+</body>
+</html>
