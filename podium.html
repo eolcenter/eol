@@ -120,15 +120,15 @@
   <script>
     /****************************************************
      🏆 EASY CONTROL CENTER
-     👉 Just edit the ratios here
+     👉 Just edit the ratios here (ONE place only)
     ****************************************************/
     const ratios = {
-      mehdi: 50,
+      mehdi: 90,
       selma: 70,
       ansou: 40
     };
 
-    // Team data (you can add more)
+    // Team data (you can add more teams)
     const teams = [
       { id: 'mehdi', name: 'Team Mehdi', image: 'https://imgur.com/LJh1L8a.png' },
       { id: 'selma', name: 'Team Selma', image: 'https://imgur.com/F335QgY.png' },
@@ -182,17 +182,10 @@
     // Initial render
     renderPodium();
 
+    // Optional: call updatePodium() after changing ratios
     function updatePodium() {
       renderPodium();
     }
-
-    // Example auto change
-    setTimeout(() => {
-      ratios.mehdi = 50;
-      ratios.selma = 50;
-      ratios.ansou = 50;
-      updatePodium();
-    }, 5000);
   </script>
 </body>
 </html>
