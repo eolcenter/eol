@@ -69,36 +69,37 @@
       document.getElementById("frame3")
     ];
 
-    let index = 0; // current page index
+    const splash = document.getElementById('splash');
+    let index = -1; // start with splash
+    const displayTime = 4000; // splash display time in ms
+    const pageTime = 15000;   // page display time in ms
 
-    function startDiaporama() {
-      // Load first page
-      frames[0].src = pages[0];
-      frames[0].classList.add("active");
+    function showNext() {
+      // Hide all frames
+      frames.forEach(f => f.classList.remove("active"));
 
-      function switchPage() {
-        // Hide all frames first
-        frames.forEach(f => f.classList.remove("active"));
-
-        // Move to next page
-        index = (index + 1) % pages.length;
-        const nextFrame = frames[index];
-        nextFrame.src = pages[index] + "?t=" + Date.now(); // force reload
-        nextFrame.classList.add("active");
+      if (index === -1) {
+        // First splash
+        splash.style.display = 'block';
+        index = 0;
+        setTimeout(showNext, displayTime);
+      } else if (index < pages.length) {
+        // Show page
+        splash.style.display = 'none';
+        const frame = frames[index];
+        frame.src = pages[index] + "?t=" + Date.now(); // force reload
+        frame.classList.add("active");
+        index++;
+        setTimeout(showNext, pageTime);
+      } else {
+        // End of pages -> show splash again
+        splash.style.display = 'block';
+        index = 0;
+        setTimeout(showNext, displayTime);
       }
-
-      // Switch every 15 seconds
-      setInterval(switchPage, 15000);
     }
 
-    // Show splash for 4 seconds, then start diaporama
-    window.addEventListener('load', () => {
-      const splash = document.getElementById('splash');
-      setTimeout(() => {
-        splash.style.display = 'none'; // hide splash
-        startDiaporama(); // start diaporama
-      }, 4000); // 4 seconds
-    });
+    window.addEventListener('load', showNext);
   </script>
 
 </body>
