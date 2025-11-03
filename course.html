@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Team Race Animation</title>
+<style>
+  body {
+    background: linear-gradient(to bottom, #87CEEB 0%, #ffffff 100%);
+    font-family: 'Arial', sans-serif;
+    overflow: hidden;
+    height: 100vh;
+  }
+
+  .label {
+    text-align: center;
+    font-size: 28px;
+    margin-top: 20px;
+    font-weight: bold;
+    color: #222;
+  }
+
+  .track {
+    position: relative;
+    width: 90%;
+    height: 180px;
+    margin: 60px auto;
+    background: linear-gradient(to right, #555 0%, #666 100%);
+    border-radius: 60px;
+    box-shadow: inset 0 8px 15px rgba(0,0,0,0.5);
+    perspective: 800px;
+    overflow: hidden;
+  }
+
+  .track::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: 100%;
+    height: 5px;
+    background: repeating-linear-gradient(
+      to right,
+      white 0,
+      white 40px,
+      transparent 40px,
+      transparent 80px
+    );
+    transform: translateY(-50%);
+    opacity: 0.8;
+  }
+
+  .finish-line {
+    position: absolute;
+    right: 0;
+    top: 0;
+    height: 100%;
+    width: 25px;
+    background-image: linear-gradient(45deg, black 25%, white 25%, white 50%, black 50%, black 75%, white 75%, white 100%);
+    background-size: 20px 20px;
+    transform: skewY(-10deg);
+    border-left: 3px solid #000;
+  }
+
+  .car {
+    position: absolute;
+    top: 65px;
+    width: 200px;
+    transition: left 3s ease-out;
+    transform: rotateY(10deg);
+  }
+
+  .car img {
+    width: 100%;
+    height: auto;
+    filter: drop-shadow(4px 4px 8px rgba(0,0,0,0.4));
+  }
+
+  .car-name {
+    position: absolute;
+    top: -30px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(255,255,255,0.8);
+    padding: 4px 10px;
+    border-radius: 10px;
+    font-weight: bold;
+    color: #222;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+  }
+
+  .trophy {
+    position: absolute;
+    top: 20px;
+    right: 40px;
+    font-size: 60px;
+    display: none;
+    animation: shine 2s infinite alternate;
+  }
+
+  @keyframes shine {
+    from { transform: scale(1) rotate(0deg); }
+    to { transform: scale(1.1) rotate(10deg); }
+  }
+</style>
+</head>
+<body>
+  <div class="label">🏁 Team Progress Race 🏁</div>
+
+  <div class="track" id="track1">
+    <div class="finish-line"></div>
+    <div class="car selma">
+      <div class="car-name">Equipe Selma</div>
+      <img src="https://imgur.com/6im9DFv.png" alt="Car Selma">
+    </div>
+  </div>
+
+  <div class="track" id="track2">
+    <div class="finish-line"></div>
+    <div class="car ansou">
+      <div class="car-name">Equipe Ansou</div>
+      <img src="https://imgur.com/b5SVv46.png" alt="Car Ansou">
+    </div>
+  </div>
+
+  <div class="track" id="track3">
+    <div class="finish-line"></div>
+    <div class="car allstars">
+      <div class="car-name">Equipe ALL STARS</div>
+      <img src="https://imgur.com/gu45FI9.png" alt="Car Allstars">
+    </div>
+  </div>
+
+  <div class="trophy" id="trophy">🏆</div>
+
+  <script>
+    const ratios = {
+      selma: 0.35,
+      ansou: 0.3,
+      allstars: 1.0 // ← 100% finish line
+    };
+
+    window.onload = function() {
+      setTimeout(() => {
+        const tracks = document.querySelectorAll('.track');
+        Object.keys(ratios).forEach(team => {
+          const car = document.querySelector(`.${team}`);
+          const track = car.parentElement;
+          const trackWidth = track.offsetWidth;
+          const carWidth = car.offsetWidth;
+
+          // Corrected position so 100% = car’s front reaches finish line
+          const maxLeft = trackWidth - carWidth - 30; // 30px margin before finish line
+          car.style.left = (ratios[team] * maxLeft) + 'px';
+        });
+      }, 1000);
+
+      setTimeout(() => {
+        document.getElementById('trophy').style.display = 'block';
+      }, 4500);
+    }
+  </script>
+</body>
+</html>
