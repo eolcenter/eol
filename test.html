@@ -33,33 +33,10 @@
     font-size: 64px;
     padding: 30px 60px;
     border-radius: 12px;
-    margin-bottom: 20px;
+    margin-bottom: 50px;
     text-align: center;
     opacity: 0;
     transition: opacity 0.5s;
-  }
-
-  /* Progress bar container */
-  .progress-container {
-    width: 60%;
-    background: rgba(255, 255, 255, 0.3);
-    border-radius: 20px;
-    margin-bottom: 50px;
-    height: 30px;
-    overflow: hidden;
-  }
-
-  /* Progress bar fill */
-  .progress-bar {
-    height: 100%;
-    width: 0%;
-    background: #007BFF;
-    border-radius: 20px;
-    text-align: center;
-    color: white;
-    font-weight: bold;
-    line-height: 30px;
-    transition: width 0.8s ease;
   }
 
   .container {
@@ -76,12 +53,13 @@
     opacity: 0;
   }
 
+  /* Services Number Box - X2 bigger */
   .sales-box {
     background: #ffffff;
     color: #007BFF;
-    font-size: 96px;
+    font-size: 96px; /* doubled from 48px */
     font-weight: bold;
-    padding: 60px 100px;
+    padding: 60px 100px; /* doubled from 30px 50px */
     border-radius: 16px;
     box-shadow: 0 6px 14px rgba(0,0,0,0.3);
     opacity: 0;
@@ -108,22 +86,16 @@
 
 <h1 id="team-heading">ALL STARS</h1>
 
-<!-- Progress Bar -->
-<div class="progress-container">
-  <div class="progress-bar" id="progress-bar">0%</div>
-</div>
-
 <div class="container">
   <img id="character-img" class="character" src="https://i.imgur.com/LJh1L8a.png" alt="Character">
-  <div class="sales-box" id="sales-box">89 Services</div>
+  <div class="sales-box" id="sales-box">89/350 Services</div>
 </div>
 
 <script>
-  // Configuration
   const characters = [
-    { heading: "ALL STARS", image: "https://i.imgur.com/LJh1L8a.png", sales: 89, max: 350 },
-    { heading: "Team Selma", image: "https://i.imgur.com/F335QgY.png", sales: 50, max: 250 },
-    { heading: "Team Ansou", image: "https://i.imgur.com/aCe7tcs.png", sales: 40, max: 100 }
+    { heading: "ALL STARS", image: "https://i.imgur.com/LJh1L8a.png", sales: "89/350 Services" },
+    { heading: "Team Selma", image: "https://i.imgur.com/F335QgY.png", sales: "50/250 Services" },
+    { heading: "Team Mansou", image: "https://i.imgur.com/aCe7tcs.png", sales: "30/100 Services" }
   ];
 
   const displayDuration = 5000;
@@ -131,7 +103,6 @@
   const headingEl = document.getElementById("team-heading");
   const characterEl = document.getElementById("character-img");
   const salesBoxEl = document.getElementById("sales-box");
-  const progressBarEl = document.getElementById("progress-bar");
 
   let currentIndex = 0;
 
@@ -145,12 +116,7 @@
     setTimeout(() => {
       headingEl.textContent = character.heading;
       characterEl.src = character.image;
-      salesBoxEl.textContent = `${character.sales} Services`;
-
-      // Update progress bar
-      const percentage = Math.min(100, Math.round((character.sales / character.max) * 100));
-      progressBarEl.style.width = percentage + '%';
-      progressBarEl.textContent = `${percentage}%`;
+      salesBoxEl.textContent = character.sales;
 
       headingEl.style.opacity = 1;
       characterEl.classList.add("slideCharacter");
@@ -164,7 +130,7 @@
     currentIndex = (currentIndex + 1) % characters.length;
     showCharacter(currentIndex);
   }, displayDuration);
-</script>
 
+</script>
 </body>
 </html>
