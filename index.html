@@ -39,7 +39,6 @@
 
   <iframe id="frame1" class="active"></iframe>
   <iframe id="frame2" class="inactive"></iframe>
-  <iframe id="frame3" class="inactive"></iframe>
 
   <script>
     const pages = [
@@ -49,21 +48,23 @@
     ];
 
     let index = 0;
-    let active = 1;
+    let active = 1; // 1 = frame1, 2 = frame2
     const frame1 = document.getElementById("frame1");
     const frame2 = document.getElementById("frame2");
-    const frame3 = document.getElementById("frame3");
 
     // Load first page
     frame1.src = pages[0];
 
-    // Function to switch pages
     function switchPage() {
+      // Move to next page
       index = (index + 1) % pages.length;
       const nextUrl = pages[index] + "?t=" + Date.now(); // force reload
+
+      // Determine which iframe to use
       const nextFrame = active === 1 ? frame2 : frame1;
       const currentFrame = active === 1 ? frame1 : frame2;
 
+      // Load next page and fade in
       nextFrame.src = nextUrl;
       nextFrame.classList.add("active");
       currentFrame.classList.remove("active");
@@ -72,7 +73,7 @@
       active = active === 1 ? 2 : 1;
     }
 
-    // Switch every 15s
+    // Switch every 15 seconds
     setInterval(switchPage, 15000);
   </script>
 
