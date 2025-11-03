@@ -110,6 +110,16 @@ h1 {
   font-weight: bold;
 }
 
+/* Logo styling */
+.logo {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  width: 100px; /* Adjust as needed */
+  height: auto;
+  z-index: 10;
+}
+
 /* Responsive adjustments */
 @media (max-width: 1600px) {
   .podium { gap: 120px; }
@@ -140,6 +150,12 @@ h1 {
 </style>
 </head>
 <body>
+
+<!-- Logo in top-left -->
+<img src="https://www.eolcenter.net/wp-content/uploads/2020/09/eol-open-graph.png" 
+     alt="EOL Logo" 
+     class="logo">
+
 <h1>🏅 CLASSEMENT 🏅</h1>
 <div class="scene">
   <div class="podium" id="podium"></div>
