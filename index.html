@@ -17,10 +17,6 @@
     /* Splash screens */
     #splash, #splash2 {
       position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
       background-position: center;
       background-repeat: no-repeat;
       z-index: 100;
@@ -28,13 +24,23 @@
     }
 
     #splash {
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
       background-image: url('https://www.eolcenter.net/wp-content/uploads/2020/09/eol-open-graph.png');
       background-size: contain;
     }
 
     #splash2 {
       background-image: url('https://imgur.com/5jVeMeU.png');
-      background-size: cover;
+      background-size: contain;
+      width: 90%; 
+      height: 90%;
+      top: 5%;
+      left: 5%;
+      border: 2px solid rgba(255,255,255,0.5);
+      border-radius: 8px;
     }
 
     iframe {
