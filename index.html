@@ -27,13 +27,11 @@
       display: none;
     }
 
-    /* First splash (keep contained) */
     #splash {
       background-image: url('https://www.eolcenter.net/wp-content/uploads/2020/09/eol-open-graph.png');
       background-size: contain;
     }
 
-    /* Second splash (stretch to fit TV) */
     #splash2 {
       background-image: url('https://imgur.com/5jVeMeU.png');
       background-size: cover;
@@ -69,56 +67,51 @@
   <iframe id="frame1" class="inactive"></iframe>
   <iframe id="frame2" class="inactive"></iframe>
   <iframe id="frame3" class="inactive"></iframe>
-  <iframe id="frame4" class="inactive"></iframe> <!-- new iframe -->
+  <iframe id="frame4" class="inactive"></iframe>
 
   <script>
     const pages = [
-      "https://eolcenter.github.io/eol/course.html",
-      "https://eolcenter.github.io/eol/podium.html",
-      "https://eolcenter.github.io/eol/resultat.html",
-      "https://eolcenter.github.io/eol/test.html" // new page
+      { url: "https://eolcenter.github.io/eol/course.html", duration: 10000 },  // 10s
+      { url: "https://eolcenter.github.io/eol/test.html", duration: 15000 },  // 10s
+      { url: "https://eolcenter.github.io/eol/resultat.html", duration: 15000 }, // 15s
+      { url: "https://eolcenter.github.io/eol/podium.html", duration: 10000 }     // 15s
     ];
 
     const frames = [
       document.getElementById("frame1"),
       document.getElementById("frame2"),
       document.getElementById("frame3"),
-      document.getElementById("frame4") // new iframe
+      document.getElementById("frame4")
     ];
 
     const splash1 = document.getElementById('splash');
     const splash2 = document.getElementById('splash2');
 
-    let index = -1; // start before first splash
-    const splash1Time = 4000; // first splash (4s)
-    const splash2Time = 5000; // second splash (5s)
-    const pageTime = 17000;   // each page display time (17s)
+    let index = -1; 
+    const splash1Time = 4000; // 4s
+    const splash2Time = 5000; // 5s
 
     function showNext() {
-      // Hide all frames
       frames.forEach(f => f.classList.remove("active"));
       splash1.style.display = 'none';
       splash2.style.display = 'none';
 
       if (index === -1) {
-        // Show first splash
         splash1.style.display = 'block';
-        index = -0.5; // marker for splash 2
+        index = -0.5;
         setTimeout(showNext, splash1Time);
       } else if (index === -0.5) {
-        // Show second splash
         splash2.style.display = 'block';
         index = 0;
         setTimeout(showNext, splash2Time);
       } else if (index < pages.length) {
-        // Show diaporama page
         const frame = frames[index];
-        frame.src = pages[index] + "?t=" + Date.now(); // force reload
+        frame.src = pages[index].url + "?t=" + Date.now();
         frame.classList.add("active");
+        const duration = pages[index].duration;
         index++;
-        setTimeout(showNext, pageTime);
+        setTimeout(showNext, duration);
       } else {
-        // Restart from first splash
         index = -1;
         showNext();
       }
