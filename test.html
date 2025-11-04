@@ -8,70 +8,110 @@
   body {
     font-family: Arial, sans-serif;
     padding: 20px;
-    background-color: #f7f7f7;
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    margin: 0;
+    min-height: 100vh;
+    animation: gradientBG 10s ease infinite;
+    background: linear-gradient(270deg, #ff9a9e, #fad0c4, #fbc2eb, #a6c1ee, #4CAF50, #2196F3, #FF9800);
+    background-size: 1400% 1400%;
   }
+
+  @keyframes gradientBG {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+
+  h1 {
+    font-size: 60px;
+    text-align: center;
+    color: #fff;
+    margin-bottom: 40px;
+    text-shadow: 2px 2px 10px rgba(0,0,0,0.6);
+  }
+
   .tables-container {
     display: flex;
-    gap: 30px; 
+    gap: 50px;
   }
+
   table {
-    width: 350px; 
+    width: 500px;
     border-collapse: collapse;
-    background-color: #fff;
-    box-shadow: 0 0 10px rgba(0,0,0,0.2);
-    font-size: 24px; 
+    background-color: rgba(255,255,255,0.9);
+    box-shadow: 0 0 15px rgba(0,0,0,0.3);
+    font-size: 28px;
   }
+
   th, td {
-    padding: 12px 15px;
+    padding: 16px 20px;
     border: 1px solid #ddd;
     text-align: center;
   }
+
   th {
     background-color: #222;
     color: #fff;
   }
+
   tr:nth-child(even) {
-    background-color: #f2f2f2;
+    background-color: rgba(242,242,242,0.85);
   }
+
   .progress-container {
     width: 100%;
     background-color: #ddd;
-    border-radius: 8px;
-    height: 30px;
+    border-radius: 12px;
+    height: 40px;
     overflow: hidden;
   }
+
   .progress-bar {
     height: 100%;
     text-align: right;
-    padding-right: 5px;
+    padding-right: 10px;
     color: #fff;
-    line-height: 30px;
+    line-height: 40px;
     font-weight: bold;
-    font-size: 20px;
+    font-size: 24px;
+    transition: width 1s ease;
   }
+
   .red { background-color: #ff4d4d; }
   .yellow { background-color: #ffcc00; color: #000; }
   .green { background-color: #4CAF50; }
+
   h2 {
-    text-align: center;
     font-size: 32px;
-    margin-bottom: 10px;
+    margin-bottom: 20px;
+    padding: 10px 20px;
+    border-radius: 8px;
+    text-align: center;
   }
+
+  /* Team specific h2 styles */
+  .team-allstars { background-color: #2196F3; color: yellow; }
+  .team-selma   { background-color: #FFEB3B; color: black; }
+  .team-mansou  { background-color: #F44336; color: white; }
+
   .table-block {
     display: flex;
     flex-direction: column;
     align-items: center;
   }
+
 </style>
 </head>
 <body>
 
+<h1>Contribution arrêté à J-1</h1>
+
 <div class="tables-container">
 
   <div class="table-block">
-    <h2>ALL STARS</h2>
+    <h2 class="team-allstars">ALL STARS</h2>
     <table>
       <tr>
         <th>Nom</th>
@@ -86,7 +126,7 @@
   </div>
 
   <div class="table-block">
-    <h2>Team SELMA</h2>
+    <h2 class="team-selma">Team SELMA</h2>
     <table>
       <tr>
         <th>Nom</th>
@@ -101,7 +141,7 @@
   </div>
 
   <div class="table-block">
-    <h2>Team MANSOU</h2>
+    <h2 class="team-mansou">Team MANSOU</h2>
     <table>
       <tr>
         <th>Nom</th>
@@ -123,7 +163,11 @@
     if(el.tagName === 'TD') {
       el.textContent = percent + '%';
     } else if(el.classList.contains('progress-bar')) {
-      el.style.width = percent + '%';
+      el.style.width = '0%';
+      setTimeout(() => {
+        el.style.width = percent + '%';
+        el.textContent = percent + '%';
+      }, 100);
       if(percent < 25){
         el.className = 'progress-bar red';
       } else if(percent < 70){
@@ -131,7 +175,6 @@
       } else {
         el.className = 'progress-bar green';
       }
-      el.textContent = percent + '%';
     }
   });
 </script>
