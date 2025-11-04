@@ -1,136 +1,106 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Character Services Loop Animation</title>
-<style>
-  body {
-    font-family: Arial, sans-serif;
-    background: linear-gradient(270deg, #FF6B6B, #FFD93D, #6BCB77, #4D96FF, #9B59B6, #FF8C00);
-    background-size: 1200% 1200%;
-    animation: gradientMove 20s ease infinite;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    overflow: hidden;
-  }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Live Diaporama Viewer</title>
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      width: 100%;
+      background: #000;
+      overflow: hidden;
+    }
 
-  @keyframes gradientMove {
-    0% { background-position: 0% 50%; }
-    25% { background-position: 50% 50%; }
-    50% { background-position: 100% 50%; }
-    75% { background-position: 50% 50%; }
-    100% { background-position: 0% 50%; }
-  }
+    /* Splash screen styling */
+    #splash {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: url('https://www.eolcenter.net/wp-content/uploads/2020/09/eol-open-graph.png') center center no-repeat;
+      background-size: contain;
+      z-index: 100;
+    }
 
-  h1 {
-    background: #000000;
-    color: #ffffff;
-    font-weight: bold;
-    font-size: 64px;
-    padding: 30px 60px;
-    border-radius: 12px;
-    margin-bottom: 50px;
-    text-align: center;
-    opacity: 0;
-    transition: opacity 0.5s;
-  }
+    iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border: none;
+      transition: opacity 1s ease;
+      opacity: 0;
+    }
 
-  .container {
-    display: flex;
-    align-items: center;
-    gap: 40px;
-    position: relative;
-  }
+    iframe.active {
+      opacity: 1;
+      z-index: 1;
+    }
 
-  .character {
-    width: 350px;
-    position: relative;
-    right: -400px;
-    opacity: 0;
-  }
-
-  /* Services Number Box - X2 bigger */
-  .sales-box {
-    background: #ffffff;
-    color: #007BFF;
-    font-size: 96px; /* doubled from 48px */
-    font-weight: bold;
-    padding: 60px 100px; /* doubled from 30px 50px */
-    border-radius: 16px;
-    box-shadow: 0 6px 14px rgba(0,0,0,0.3);
-    opacity: 0;
-    transform: translateX(120px);
-    transition: all 0.8s;
-  }
-
-  .slideCharacter {
-    animation: slideCharacter 1s forwards;
-  }
-
-  .slideSales {
-    transform: translateX(0);
-    opacity: 1;
-  }
-
-  @keyframes slideCharacter {
-    0% { right: -400px; opacity: 0; }
-    100% { right: 0px; opacity: 1; }
-  }
-</style>
+    iframe.inactive {
+      z-index: 0;
+    }
+  </style>
 </head>
 <body>
 
-<h1 id="team-heading">ALL STARS</h1>
+  <!-- Splash image -->
+  <div id="splash"></div>
 
-<div class="container">
-  <img id="character-img" class="character" src="https://i.imgur.com/LJh1L8a.png" alt="Character">
-  <div class="sales-box" id="sales-box">89/350 Services</div>
-</div>
+  <iframe id="frame1" class="inactive"></iframe>
+  <iframe id="frame2" class="inactive"></iframe>
+  <iframe id="frame3" class="inactive"></iframe>
 
-<script>
-  const characters = [
-    { heading: "ALL STARS", image: "https://i.imgur.com/LJh1L8a.png", sales: "89/350 Services" },
-    { heading: "Team Selma", image: "https://i.imgur.com/F335QgY.png", sales: "50/250 Services" },
-    { heading: "Team Mansou", image: "https://i.imgur.com/aCe7tcs.png", sales: "30/100 Services" }
-  ];
+  <script>
+    const pages = [
+      "https://eolcenter.github.io/eol/course.html",
+      "https://eolcenter.github.io/eol/podium.html",
+      "https://eolcenter.github.io/eol/resultat.html"
+    ];
 
-  const displayDuration = 5000;
+    const frames = [
+      document.getElementById("frame1"),
+      document.getElementById("frame2"),
+      document.getElementById("frame3")
+    ];
 
-  const headingEl = document.getElementById("team-heading");
-  const characterEl = document.getElementById("character-img");
-  const salesBoxEl = document.getElementById("sales-box");
+    const splash = document.getElementById('splash');
+    let index = -1; // start with splash
+    const displayTime = 4000; // splash display time in ms
+    const pageTime = 15000;   // page display time in ms
 
-  let currentIndex = 0;
+    function showNext() {
+      // Hide all frames
+      frames.forEach(f => f.classList.remove("active"));
 
-  function showCharacter(index) {
-    const character = characters[index];
+      if (index === -1) {
+        // First splash
+        splash.style.display = 'block';
+        index = 0;
+        setTimeout(showNext, displayTime);
+      } else if (index < pages.length) {
+        // Show page
+        splash.style.display = 'none';
+        const frame = frames[index];
+        frame.src = pages[index] + "?t=" + Date.now(); // force reload
+        frame.classList.add("active");
+        index++;
+        setTimeout(showNext, pageTime);
+      } else {
+        // End of pages -> show splash again
+        splash.style.display = 'block';
+        index = 0;
+        setTimeout(showNext, displayTime);
+      }
+    }
 
-    headingEl.style.opacity = 0;
-    characterEl.classList.remove("slideCharacter");
-    salesBoxEl.classList.remove("slideSales");
+    window.addEventListener('load', showNext);
+  </script>
 
-    setTimeout(() => {
-      headingEl.textContent = character.heading;
-      characterEl.src = character.image;
-      salesBoxEl.textContent = character.sales;
-
-      headingEl.style.opacity = 1;
-      characterEl.classList.add("slideCharacter");
-      salesBoxEl.classList.add("slideSales");
-    }, 200);
-  }
-
-  showCharacter(currentIndex);
-
-  setInterval(() => {
-    currentIndex = (currentIndex + 1) % characters.length;
-    showCharacter(currentIndex);
-  }, displayDuration);
-
-</script>
 </body>
 </html>
