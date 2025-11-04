@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Character Services Loop Animation</title>
+<title>Character Services Loop Animation - TV Mode</title>
 <style>
   body {
     font-family: Arial, sans-serif;
@@ -16,6 +16,10 @@
     align-items: center;
     height: 100vh;
     overflow: hidden;
+
+    /* ✅ Zoom global pour TV */
+    transform: scale(1.18); /* 1.25 = +25% plus grand */
+    transform-origin: center center;
   }
 
   @keyframes gradientMove {
@@ -27,44 +31,85 @@
   }
 
   h1 {
-    background: #000000;
+    background: rgba(0, 0, 0, 0.8);
     color: #ffffff;
     font-weight: bold;
-    font-size: 64px;
-    padding: 30px 60px;
-    border-radius: 12px;
-    margin-bottom: 50px;
+    font-size: 80px; /* augmenté */
+    padding: 40px 80px;
+    border-radius: 16px;
+    margin-bottom: 70px;
     text-align: center;
     opacity: 0;
     transition: opacity 0.5s;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.6);
   }
 
   .container {
     display: flex;
     align-items: center;
-    gap: 40px;
+    gap: 50px;
     position: relative;
+    flex-direction: column;
   }
 
   .character {
-    width: 350px;
+    width: 450px; /* augmenté */
     position: relative;
-    right: -400px;
+    right: -500px;
     opacity: 0;
+    filter: drop-shadow(0 12px 12px rgba(0,0,0,0.5));
   }
 
-  /* Services Number Box - X2 bigger */
   .sales-box {
-    background: #ffffff;
+    background: rgba(255, 255, 255, 0.95);
     color: #007BFF;
-    font-size: 96px; /* doubled from 48px */
+    font-size: 120px;  /* plus grand */
     font-weight: bold;
-    padding: 60px 100px; /* doubled from 30px 50px */
-    border-radius: 16px;
-    box-shadow: 0 6px 14px rgba(0,0,0,0.3);
+    padding: 70px 120px;
+    border-radius: 20px;
+    box-shadow: 0 8px 18px rgba(0,0,0,0.5);
     opacity: 0;
-    transform: translateX(120px);
+    transform: translateX(150px);
     transition: all 0.8s;
+  }
+
+  /* ✅ Jauge 3D type batterie visible sur TV */
+  .progress-container {
+    width: 90%;
+    height: 80px; /* plus haut */
+    background: rgba(255,255,255,0.15);
+    border-radius: 24px;
+    overflow: hidden;
+    margin-top: 30px;
+    box-shadow:
+      inset 0 4px 12px rgba(0,0,0,0.6),
+      0 6px 24px rgba(0,0,0,0.7);
+    border: 3px solid rgba(255,255,255,0.7);
+    backdrop-filter: blur(8px);
+  }
+
+  .progress-bar {
+    height: 100%;
+    width: 0%;
+    border-radius: 24px;
+    background: linear-gradient(145deg, #ff0000, #aa0000);
+    box-shadow:
+      inset 0 4px 8px rgba(255,255,255,0.4),
+      0 6px 10px rgba(0,0,0,0.5);
+    transition: width 1s ease, background 0.6s ease;
+    position: relative;
+  }
+
+  .progress-bar::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    border-radius: 24px;
+    background: linear-gradient(to bottom, rgba(255,255,255,0.5), rgba(255,255,255,0.1));
+    pointer-events: none;
   }
 
   .slideCharacter {
@@ -77,7 +122,7 @@
   }
 
   @keyframes slideCharacter {
-    0% { right: -400px; opacity: 0; }
+    0% { right: -500px; opacity: 0; }
     100% { right: 0px; opacity: 1; }
   }
 </style>
@@ -89,13 +134,17 @@
 <div class="container">
   <img id="character-img" class="character" src="https://i.imgur.com/LJh1L8a.png" alt="Character">
   <div class="sales-box" id="sales-box">89/350 Services</div>
+  <div class="progress-container">
+    <div class="progress-bar" id="progress-bar"></div>
+  </div>
 </div>
 
 <script>
+  // ⚙️ Données des équipes
   const characters = [
-    { heading: "ALL STARS", image: "https://i.imgur.com/LJh1L8a.png", sales: "79/350 Services" },
-    { heading: "Team Selma", image: "https://i.imgur.com/F335QgY.png", sales: "60/250 Services" },
-    { heading: "Team Mansou", image: "https://i.imgur.com/aCe7tcs.png", sales: "30/100 Services" }
+    { heading: "ALL STARS", image: "https://i.imgur.com/LJh1L8a.png", sales: 89, goal: 350 },
+    { heading: "Team Selma", image: "https://i.imgur.com/F335QgY.png", sales: 50, goal: 250 },
+    { heading: "Team Mansou", image: "https://i.imgur.com/aCe7tcs.png", sales: 70, goal: 100 }
   ];
 
   const displayDuration = 5000;
@@ -103,24 +152,36 @@
   const headingEl = document.getElementById("team-heading");
   const characterEl = document.getElementById("character-img");
   const salesBoxEl = document.getElementById("sales-box");
+  const progressBarEl = document.getElementById("progress-bar");
 
   let currentIndex = 0;
 
   function showCharacter(index) {
-    const character = characters[index];
+    const c = characters[index];
+    const percent = Math.min((c.sales / c.goal) * 100, 100);
+
+    // 🎨 Couleur 3D dynamique selon progression
+    let gradient;
+    if (percent < 30) gradient = "linear-gradient(145deg, #ff1a1a, #b30000)";
+    else if (percent < 70) gradient = "linear-gradient(145deg, #FFD93D, #CCAA00)";
+    else gradient = "linear-gradient(145deg, #4CAF50, #1B5E20)";
 
     headingEl.style.opacity = 0;
     characterEl.classList.remove("slideCharacter");
     salesBoxEl.classList.remove("slideSales");
 
     setTimeout(() => {
-      headingEl.textContent = character.heading;
-      characterEl.src = character.image;
-      salesBoxEl.textContent = character.sales;
+      headingEl.textContent = c.heading;
+      characterEl.src = c.image;
+      salesBoxEl.textContent = `${c.sales}/${c.goal} Services`;
 
       headingEl.style.opacity = 1;
       characterEl.classList.add("slideCharacter");
       salesBoxEl.classList.add("slideSales");
+
+      // ⚡ Mise à jour de la jauge
+      progressBarEl.style.width = `${percent}%`;
+      progressBarEl.style.background = gradient;
     }, 200);
   }
 
@@ -130,7 +191,7 @@
     currentIndex = (currentIndex + 1) % characters.length;
     showCharacter(currentIndex);
   }, displayDuration);
-
 </script>
+
 </body>
 </html>
