@@ -3,9 +3,8 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Dynamic Moving Podium</title>
+<title>Dynamic Moving Podium (TV View)</title>
 
-<!-- ✅ Stylish Font -->
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
 
 <style>
@@ -20,6 +19,8 @@ body {
   background-size: 400% 400%;
   animation: gradientMove 12s ease infinite;
   font-family: 'Poppins', sans-serif;
+  transform: scale(1.1); /* ✅ Slight zoom for TV */
+  transform-origin: center;
 }
 
 @keyframes gradientMove {
@@ -30,7 +31,7 @@ body {
 
 @keyframes jump {
   0%, 100% { transform: translateX(-50%) translateY(-10px); }
-  50% { transform: translateX(-50%) translateY(-120px); }
+  50% { transform: translateX(-50%) translateY(-130px); }
 }
 
 h1 {
@@ -39,7 +40,7 @@ h1 {
   width: 100%;
   text-align: center;
   color: white;
-  font-size: 80px;
+  font-size: 90px; /* Bigger for TV */
   text-shadow: 0 4px 30px rgba(0, 0, 0, 0.7);
   font-family: 'Bebas Neue', sans-serif;
   letter-spacing: 3px;
@@ -49,7 +50,7 @@ h1 {
   position: relative;
   width: 90vw;
   max-width: 1600px;
-  height: 70vh;
+  height: 75vh; /* slightly taller scene for zoomed layout */
   display: flex;
   justify-content: center;
   align-items: flex-end;
@@ -59,14 +60,14 @@ h1 {
   display: flex;
   justify-content: center;
   align-items: flex-end;
-  gap: 160px; /* Max space between characters */
+  gap: 180px; /* slightly more spacing for bigger elements */
   width: 100%;
   transition: all 1s ease;
 }
 
 .step {
   position: relative;
-  width: 250px;
+  width: 280px;
   border-radius: 15px;
   text-align: center;
   color: white;
@@ -75,16 +76,16 @@ h1 {
   box-shadow: inset 0 -10px 40px rgba(0, 0, 0, 0.3), 0 20px 40px rgba(0, 0, 0, 0.4);
 }
 
-.gold { background: linear-gradient(180deg, #ffdf00, #c5a500); height: 220px; }
-.silver { background: linear-gradient(180deg, #c0c0c0, #8f8f8f); height: 170px; }
-.bronze { background: linear-gradient(180deg, #cd7f32, #8b4513); height: 140px; }
+.gold { background: linear-gradient(180deg, #ffdf00, #c5a500); height: 250px; }
+.silver { background: linear-gradient(180deg, #c0c0c0, #8f8f8f); height: 200px; }
+.bronze { background: linear-gradient(180deg, #cd7f32, #8b4513); height: 170px; }
 
 .character {
   position: absolute;
   bottom: 100%;
   left: 50%;
   transform: translateX(-50%) translateY(-10px);
-  width: 250px;
+  width: 280px; /* ✅ enlarged character */
 }
 
 .character img {
@@ -95,7 +96,7 @@ h1 {
 
 .name {
   margin-top: 10px;
-  font-size: 36px;
+  font-size: 40px; /* bigger */
   color: #000;
   font-family: 'Bebas Neue', sans-serif;
   font-weight: 700;
@@ -103,60 +104,30 @@ h1 {
 }
 
 .stats {
-  font-size: 30px;
+  font-size: 32px;
   color: #000000;
   opacity: 0.85;
   margin-top: 5px;
   font-weight: bold;
 }
 
-/* Logo styling - bigger */
 .logo {
   position: absolute;
-  top: 20px;
-  left: 20px;
-  width: 200px; /* increased from 100px */
+  top: 25px;
+  left: 25px;
+  width: 230px; /* slightly larger */
   height: auto;
   z-index: 10;
-}
-
-/* Responsive adjustments */
-@media (max-width: 1600px) {
-  .podium { gap: 120px; }
-  .step { width: 220px; }
-  .character { width: 220px; }
-  .name { font-size: 32px; }
-  .stats { font-size: 26px; }
-  h1 { font-size: 70px; }
-}
-
-@media (max-width: 1200px) {
-  .podium { gap: 90px; }
-  .step { width: 180px; }
-  .character { width: 180px; }
-  .name { font-size: 28px; }
-  .stats { font-size: 24px; }
-  h1 { font-size: 60px; }
-}
-
-@media (max-width: 768px) {
-  .podium { gap: 50px; }
-  .step { width: 150px; }
-  .character { width: 150px; }
-  .name { font-size: 22px; }
-  .stats { font-size: 18px; }
-  h1 { font-size: 40px; }
 }
 </style>
 </head>
 <body>
 
-<!-- Logo in top-left -->
-<img src="https://www.eolcenter.net/wp-content/uploads/2020/09/eol-open-graph.png" 
-     alt="EOL Logo" 
-     class="logo">
+<img src="" 
+     alt="EOL Logo" class="logo">
 
 <h1>🏅 CLASSEMENT 🏅</h1>
+
 <div class="scene">
   <div class="podium" id="podium"></div>
 </div>
@@ -183,10 +154,8 @@ function renderPodium() {
 
   sorted.forEach((team, i) => {
     const step = document.createElement('div');
-    if (i === 0) step.className = 'step gold';
-    else if (i === 1) step.className = 'step silver';
-    else step.className = 'step bronze';
-
+    step.className = ['gold','silver','bronze'][i] ? `step ${['gold','silver','bronze'][i]}` : 'step bronze';
+    
     const character = document.createElement('div');
     character.className = 'character';
     character.innerHTML = `<img src="${team.image}" alt="${team.name}">`;
@@ -218,12 +187,7 @@ function animateJump() {
   });
 }
 
-// Initial render
 renderPodium();
-
-function updatePodium() {
-  renderPodium();
-}
 </script>
 </body>
 </html>
