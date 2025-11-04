@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Team Contributions - TV View</title>
+<title>Team Réalisation - TV View</title>
 <style>
   body {
     font-family: Arial, sans-serif;
@@ -101,7 +101,6 @@
     flex-direction: column;
     align-items: center;
   }
-
 </style>
 </head>
 <body>
@@ -115,19 +114,12 @@
     <table>
       <tr>
         <th>Nom</th>
-        <th>Contribution</th>
-        <th>Progression</th>
+        <th>Réalisé</th>
       </tr>
-      <tr><td>ILHAM</td><td data-percent="23.26"></td><td><div class="progress-container"><div class="progress-bar" data-percent="23.26"></div></div></td></tr>
-      <tr><td>GHISLAINE</td><td data-percent="45"></td><td><div class="progress-container"><div class="progress-bar" data-percent="45"></div></div></td></tr>
-      <tr><td>SOUFIANE</td><td data-percent="75"></td><td><div class="progress-container"><div class="progress-bar" data-percent="75"></div></div></td></tr>
-      <tr><td>NAOUFAL</td><td data-percent="90"></td><td><div class="progress-container"><div class="progress-bar" data-percent="90"></div></div></td></tr>
-      <tr><td>HALIM</td><td data-percent="90"></td><td><div class="progress-container"><div class="progress-bar" data-percent="90"></div></div></td></tr>
-      <tr><td>SARAH</td><td data-percent="90"></td><td><div class="progress-container"><div class="progress-bar" data-percent="20"></div></div></td></tr>
-      <tr><td>LEONIE</td><td data-percent="90"></td><td><div class="progress-container"><div class="progress-bar" data-percent="70"></div></div></td></tr>
-      <tr><td>BADR</td><td data-percent="90"></td><td><div class="progress-container"><div class="progress-bar" data-percent="90"></div></div></td></tr>
-
-
+      <tr><td>ILHAM</td><td><div class="progress-container"><div class="progress-bar" data-percent="23.26"></div></div></td></tr>
+      <tr><td>GHISLAINE</td><td><div class="progress-container"><div class="progress-bar" data-percent="45"></div></div></td></tr>
+      <tr><td>SOUFIANE</td><td><div class="progress-container"><div class="progress-bar" data-percent="75"></div></div></td></tr>
+      <tr><td>NAOUFAL</td><td><div class="progress-container"><div class="progress-bar" data-percent="90"></div></div></td></tr>
     </table>
   </div>
 
@@ -136,13 +128,12 @@
     <table>
       <tr>
         <th>Nom</th>
-        <th>Contribution</th>
-        <th>Progression</th>
+        <th>Réalisé</th>
       </tr>
-      <tr><td>HICHAM</td><td data-percent="50"></td><td><div class="progress-container"><div class="progress-bar" data-percent="50"></div></div></td></tr>
-      <tr><td>SALAH</td><td data-percent="20"></td><td><div class="progress-container"><div class="progress-bar" data-percent="20"></div></div></td></tr>
-      <tr><td>HAYAT</td><td data-percent="75"></td><td><div class="progress-container"><div class="progress-bar" data-percent="75"></div></div></td></tr>
-      <tr><td>YASSINE</td><td data-percent="85"></td><td><div class="progress-container"><div class="progress-bar" data-percent="85"></div></div></td></tr>
+      <tr><td>HICHAM</td><td><div class="progress-container"><div class="progress-bar" data-percent="50"></div></div></td></tr>
+      <tr><td>SALAH</td><td><div class="progress-container"><div class="progress-bar" data-percent="20"></div></div></td></tr>
+      <tr><td>HAYAT</td><td><div class="progress-container"><div class="progress-bar" data-percent="75"></div></div></td></tr>
+      <tr><td>YASSINE</td><td><div class="progress-container"><div class="progress-bar" data-percent="85"></div></div></td></tr>
     </table>
   </div>
 
@@ -151,36 +142,33 @@
     <table>
       <tr>
         <th>Nom</th>
-        <th>Contribution</th>
-        <th>Progression</th>
+        <th>Réalisé</th>
       </tr>
-      <tr><td>HICHAM</td><td data-percent="23.26"></td><td><div class="progress-container"><div class="progress-bar" data-percent="23.26"></div></div></td></tr>
-      <tr><td>SALAH</td><td data-percent="50"></td><td><div class="progress-container"><div class="progress-bar" data-percent="50"></div></div></td></tr>
-      <tr><td>HAYAT</td><td data-percent="75"></td><td><div class="progress-container"><div class="progress-bar" data-percent="75"></div></div></td></tr>
-      <tr><td>YASSINE</td><td data-percent="85"></td><td><div class="progress-container"><div class="progress-bar" data-percent="85"></div></div></td></tr>
+      <tr><td>HICHAM</td><td><div class="progress-container"><div class="progress-bar" data-percent="23.26"></div></div></td></tr>
+      <tr><td>SALAH</td><td><div class="progress-container"><div class="progress-bar" data-percent="50"></div></div></td></tr>
+      <tr><td>HAYAT</td><td><div class="progress-container"><div class="progress-bar" data-percent="75"></div></div></td></tr>
+      <tr><td>YASSINE</td><td><div class="progress-container"><div class="progress-bar" data-percent="85"></div></div></td></tr>
     </table>
   </div>
 
 </div>
 
 <script>
-  document.querySelectorAll('td[data-percent], .progress-bar').forEach(el => {
-    let percent = parseFloat(el.getAttribute('data-percent'));
-    if(el.tagName === 'TD') {
-      el.textContent = percent + '%';
-    } else if(el.classList.contains('progress-bar')) {
-      el.style.width = '0%';
-      setTimeout(() => {
-        el.style.width = percent + '%';
-        el.textContent = percent + '%';
-      }, 100);
-      if(percent < 25){
-        el.className = 'progress-bar red';
-      } else if(percent < 70){
-        el.className = 'progress-bar yellow';
-      } else {
-        el.className = 'progress-bar green';
-      }
+  // Dynamically fill progress bars
+  document.querySelectorAll('.progress-bar').forEach(bar => {
+    let percent = parseFloat(bar.getAttribute('data-percent'));
+    bar.style.width = '0%';
+    setTimeout(() => {
+      bar.style.width = percent + '%';
+      bar.textContent = percent + '%';
+    }, 100);
+
+    if(percent < 25){
+      bar.className = 'progress-bar red';
+    } else if(percent < 70){
+      bar.className = 'progress-bar yellow';
+    } else {
+      bar.className = 'progress-bar green';
     }
   });
 </script>
