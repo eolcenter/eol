@@ -71,10 +71,10 @@
 
   <script>
     const pages = [
-      { url: "https://eolcenter.github.io/eol/course.html", duration: 10000 },  // 10s
-      { url: "https://eolcenter.github.io/eol/test.html", duration: 15000 },  // 10s
+      { url: "https://eolcenter.github.io/eol/course.html", duration: 10000 },   // 10s
+      { url: "https://eolcenter.github.io/eol/test.html", duration: 15000 },     // 15s
       { url: "https://eolcenter.github.io/eol/resultat.html", duration: 15000 }, // 15s
-      { url: "https://eolcenter.github.io/eol/podium.html", duration: 10000 }     // 15s
+      { url: "https://eolcenter.github.io/eol/podium.html", duration: 10000 }    // 10s
     ];
 
     const frames = [
@@ -92,6 +92,7 @@
     const splash2Time = 5000; // 5s
 
     function showNext() {
+      // Hide all frames
       frames.forEach(f => f.classList.remove("active"));
       splash1.style.display = 'none';
       splash2.style.display = 'none';
@@ -106,13 +107,13 @@
         setTimeout(showNext, splash2Time);
       } else if (index < pages.length) {
         const frame = frames[index];
-        frame.src = pages[index].url + "?t=" + Date.now();
+        frame.src = pages[index].url + "?t=" + Date.now(); // force reload
         frame.classList.add("active");
         const duration = pages[index].duration;
         index++;
         setTimeout(showNext, duration);
       } else {
-        index = -1;
+        index = -1; // restart from first splash
         showNext();
       }
     }
