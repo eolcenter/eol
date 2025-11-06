@@ -16,9 +16,7 @@
     align-items: center;
     height: 100vh;
     overflow: hidden;
-
-    /* ✅ Zoom global pour TV */
-    transform: scale(1.03); /* 1.25 = +25% plus grand */
+    transform: scale(1.03);
     transform-origin: center center;
   }
 
@@ -34,7 +32,7 @@
     background: rgba(0, 0, 0, 0.8);
     color: #ffffff;
     font-weight: bold;
-    font-size: 80px; /* augmenté */
+    font-size: 80px;
     padding: 40px 80px;
     border-radius: 16px;
     margin-bottom: 70px;
@@ -47,13 +45,13 @@
   .container {
     display: flex;
     align-items: center;
+    justify-content: center;
     gap: 50px;
     position: relative;
-    flex-direction: column;
   }
 
   .character {
-    width: 450px; /* augmenté */
+    width: 450px;
     position: relative;
     right: -500px;
     opacity: 0;
@@ -63,9 +61,9 @@
   .sales-box {
     background: rgba(255, 255, 255, 0.95);
     color: #007BFF;
-    font-size: 120px;  /* plus grand */
+    font-size: 100px;
     font-weight: bold;
-    padding: 70px 120px;
+    padding: 40px 80px;
     border-radius: 20px;
     box-shadow: 0 8px 18px rgba(0,0,0,0.5);
     opacity: 0;
@@ -73,43 +71,46 @@
     transition: all 0.8s;
   }
 
-  /* ✅ Jauge 3D type batterie visible sur TV */
-  .progress-container {
-    width: 90%;
-    height: 80px; /* plus haut */
-    background: rgba(255,255,255,0.15);
-    border-radius: 24px;
-    overflow: hidden;
-    margin-top: 30px;
-    box-shadow:
-      inset 0 4px 12px rgba(0,0,0,0.6),
-      0 6px 24px rgba(0,0,0,0.7);
+  /* ✅ Battery Bar (to the right of character) */
+  .battery-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    position: relative;
+    width: 300px;
+    height: 120px;
+    background: rgba(255, 255, 255, 0.2);
     border: 3px solid rgba(255,255,255,0.7);
-    backdrop-filter: blur(8px);
+    border-radius: 20px;
+    box-shadow: inset 0 4px 12px rgba(0,0,0,0.6), 0 6px 24px rgba(0,0,0,0.7);
+    overflow: hidden;
   }
 
-  .progress-bar {
+  .battery-fill {
     height: 100%;
     width: 0%;
-    border-radius: 24px;
+    border-radius: 17px;
     background: linear-gradient(145deg, #ff0000, #aa0000);
-    box-shadow:
-      inset 0 4px 8px rgba(255,255,255,0.4),
-      0 6px 10px rgba(0,0,0,0.5);
     transition: width 1s ease, background 0.6s ease;
-    position: relative;
   }
 
-  .progress-bar::after {
-    content: "";
+  .battery-cap {
     position: absolute;
-    top: 0;
-    left: 0;
-    height: 100%;
+    right: -25px;
+    width: 20px;
+    height: 50px;
+    background: rgba(255,255,255,0.8);
+    border-radius: 5px;
+  }
+
+  .battery-text {
+    position: absolute;
     width: 100%;
-    border-radius: 24px;
-    background: linear-gradient(to bottom, rgba(255,255,255,0.5), rgba(255,255,255,0.1));
-    pointer-events: none;
+    text-align: center;
+    color: white;
+    font-size: 36px;
+    font-weight: bold;
+    text-shadow: 2px 2px 4px black;
   }
 
   .slideCharacter {
@@ -133,18 +134,23 @@
 
 <div class="container">
   <img id="character-img" class="character" src="https://i.imgur.com/LJh1L8a.png" alt="Character">
-  <div class="sales-box" id="sales-box">89/350 Services</div>
-  <div class="progress-container">
-    <div class="progress-bar" id="progress-bar"></div>
+
+  <!-- ✅ Battery to the right -->
+  <div class="battery-wrapper">
+    <div class="battery-fill" id="battery-fill"></div>
+    <div class="battery-text" id="battery-text">0%</div>
+    <div class="battery-cap"></div>
   </div>
 </div>
 
+<div class="sales-box" id="sales-box">89/350 Services</div>
+
 <script>
-  // ⚙️ Données des équipes
+  // ⚙️ Team data
   const characters = [
     { heading: "ALL STARS", image: "https://i.imgur.com/LJh1L8a.png", sales: 45, goal: 350 },
     { heading: "Team Selma", image: "https://i.imgur.com/F335QgY.png", sales: 46, goal: 250 },
-    { heading: "Team Mansou", image: "https://i.imgur.com/aCe7tcs.png", sales: 13, goal: 100 }
+    { heading: "Team Mansou", image: "https://i.imgur.com/aCe7tcs.png", sales: 11, goal: 100 }
   ];
 
   const displayDuration = 5000;
@@ -152,15 +158,16 @@
   const headingEl = document.getElementById("team-heading");
   const characterEl = document.getElementById("character-img");
   const salesBoxEl = document.getElementById("sales-box");
-  const progressBarEl = document.getElementById("progress-bar");
+  const batteryFillEl = document.getElementById("battery-fill");
+  const batteryTextEl = document.getElementById("battery-text");
 
   let currentIndex = 0;
 
   function showCharacter(index) {
     const c = characters[index];
-    const percent = Math.min((c.sales / c.goal) * 100, 100);
+    const percent = Math.min((c.sales / c.goal) * 100, 100).toFixed(0);
 
-    // 🎨 Couleur 3D dynamique selon progression
+    // 🎨 Dynamic color gradient
     let gradient;
     if (percent < 30) gradient = "linear-gradient(145deg, #ff1a1a, #b30000)";
     else if (percent < 70) gradient = "linear-gradient(145deg, #FFD93D, #CCAA00)";
@@ -179,9 +186,10 @@
       characterEl.classList.add("slideCharacter");
       salesBoxEl.classList.add("slideSales");
 
-      // ⚡ Mise à jour de la jauge
-      progressBarEl.style.width = `${percent}%`;
-      progressBarEl.style.background = gradient;
+      // ⚡ Battery bar update
+      batteryFillEl.style.width = `${percent}%`;
+      batteryFillEl.style.background = gradient;
+      batteryTextEl.textContent = `${percent}%`;
     }, 200);
   }
 
