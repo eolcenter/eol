@@ -22,7 +22,7 @@
     color: white;
     font-family: "Poppins", sans-serif;
     overflow: hidden;
-    gap: 80px;
+    gap: 60px; /* gap between sections */
     padding-top: 40px;
     position: relative;
   }
@@ -31,6 +31,27 @@
     0% { background-position: 0% 50%; }
     50% { background-position: 100% 50%; }
     100% { background-position: 0% 50%; }
+  }
+
+  /* Bouncing and zooming PRIZE text */
+  #prizeText {
+    font-size: 120px; /* very big for TV */
+    font-weight: 900;
+    color: #fff;
+    text-shadow:
+      2px 2px 6px #000,
+      0 0 20px #fff;
+    animation: bounceZoom 1.2s ease-in-out infinite alternate;
+    text-align: center;
+    width: 100%;
+    user-select: none;
+    margin-bottom: 20px;
+  }
+
+  @keyframes bounceZoom {
+    0% { transform: scale(1) translateY(0); }
+    50% { transform: scale(1.3) translateY(-15px); }
+    100% { transform: scale(1) translateY(0); }
   }
 
   /* 3D Shiny White Sliding Text with Black Shadow */
@@ -105,36 +126,14 @@
     100% { transform: rotateX(360deg); }
   }
 
-  /* Bouncing and zooming WIN text */
-  #winText {
-    position: absolute;
-    bottom: 20px;
-    font-size: 200px; /* very big */
-    font-weight: 900;
-    color: #fff;
-    text-shadow:
-      3px 3px 8px #000,
-      0 0 30px #fff;
-    animation: bounceZoom 1.2s ease-in-out infinite alternate;
-    text-align: center;
-    width: 100%;
-    user-select: none;
-  }
-
-  @keyframes bounceZoom {
-    0% { transform: scale(1) translateY(0); }
-    50% { transform: scale(1.2) translateY(-20px); }
-    100% { transform: scale(1) translateY(0); }
-  }
-
   /* Responsive adjustments */
   @media (max-width: 1600px) {
     :root { --cube-size: 250px; }
     h2 { font-size: 100px; }
     .cube { font-size: 150px; }
     #flamingText { font-size: 100px; }
+    #prizeText { font-size: 100px; }
     .countdown { gap: 30px; }
-    #winText { font-size: 160px; }
   }
 
   @media (max-width: 1200px) {
@@ -142,8 +141,8 @@
     h2 { font-size: 80px; }
     .cube { font-size: 120px; }
     #flamingText { font-size: 80px; }
+    #prizeText { font-size: 80px; }
     .countdown { gap: 25px; }
-    #winText { font-size: 120px; }
   }
 
   @media (max-width: 768px) {
@@ -151,12 +150,15 @@
     h2 { font-size: 50px; }
     .cube { font-size: 70px; }
     #flamingText { font-size: 50px; }
+    #prizeText { font-size: 50px; }
     .countdown { gap: 15px; }
-    #winText { font-size: 60px; }
   }
 </style>
 </head>
 <body>
+
+<!-- Bouncing and Zooming PRIZE Text -->
+<div id="prizeText">PRIZE 100.000 Dhs</div>
 
 <!-- 3D Shiny White Sliding Text with Black Shadow -->
 <div id="flamingText">CHALLENGE SKY IS THE LIMIT</div>
@@ -179,13 +181,10 @@
   <div class="countdown" id="restant"></div>
 </div>
 
-<!-- Bouncing and Zooming WIN Text -->
-<div id="winText">PRIZE 100.000 Dhs</div>
-
 <script>
 /* ====================== CONFIG ====================== */
 const objectifValue = 2500;
-const realiseValue = 400;
+const realiseValue = 300;
 const digits = 4;
 const restantValue = objectifValue - realiseValue;
 
