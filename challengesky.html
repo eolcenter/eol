@@ -3,10 +3,10 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Slot Machine Counters - TV Display</title>
+<title>Slot Machine Counters - TV Display with Shiny White Sliding Text</title>
 <style>
   :root {
-    --cube-size: 200px; /* bigger cubes */
+    --cube-size: 200px;
   }
 
   body {
@@ -22,8 +22,8 @@
     color: white;
     font-family: "Poppins", sans-serif;
     overflow: hidden;
-    gap: 80px; /* more spacing */
-    padding-top: 40px;
+    gap: 50px;
+    padding-top: 20px;
   }
 
   @keyframes gradientMove {
@@ -32,8 +32,33 @@
     100% { background-position: 0% 50%; }
   }
 
+  /* 3D Shiny White Sliding Text with Black Shadow */
+  #flamingText {
+    font-size: 90px;
+    font-weight: 900;
+    text-transform: uppercase;
+    white-space: nowrap;
+    color: #fff;
+    text-shadow:
+      0 0 10px #fff,
+      0 0 20px #fff,
+      0 0 30px #fff,
+      0 0 40px #fff,
+      2px 2px 4px #000,
+      4px 4px 10px #000;
+    animation: slideRightToLeft 15s linear infinite;
+    margin-bottom: 50px;
+    perspective: 600px;
+    transform: rotateX(10deg);
+  }
+
+  @keyframes slideRightToLeft {
+    0% { transform: translateX(100%) rotateX(10deg); }
+    100% { transform: translateX(-100%) rotateX(10deg); }
+  }
+
   h2 {
-    font-size: 80px; /* bigger titles */
+    font-size: 80px;
     font-weight: 900;
     text-transform: uppercase;
     text-shadow: 0 6px 25px rgba(0,0,0,0.7);
@@ -49,7 +74,7 @@
 
   .countdown {
     display: flex;
-    gap: 25px; /* bigger gap */
+    gap: 25px;
   }
 
   .cube {
@@ -57,7 +82,7 @@
     height: var(--cube-size);
     color: #00ffcc;
     border-radius: 15px;
-    font-size: 120px; /* bigger numbers */
+    font-size: 120px;
     font-weight: 900;
     display: flex;
     align-items: center;
@@ -85,16 +110,21 @@
     :root { --cube-size: 150px; }
     h2 { font-size: 60px; }
     .cube { font-size: 90px; }
+    #flamingText { font-size: 60px; }
   }
 
   @media (max-width: 768px) {
     :root { --cube-size: 100px; }
     h2 { font-size: 40px; }
     .cube { font-size: 60px; }
+    #flamingText { font-size: 40px; }
   }
 </style>
 </head>
 <body>
+
+<!-- 3D Shiny White Sliding Text with Black Shadow -->
+<div id="flamingText">CHALLENGE SKY IS THE LIMIT</div>
 
 <!-- OBJECTIF -->
 <div class="section">
@@ -150,7 +180,6 @@ function slotRoll(id, targetValue) {
       cube.textContent = Math.floor(Math.random() * 10);
       counter++;
 
-      // Gradually slow down
       if (counter > 20) intervalTime = 40;
       if (counter > 50) intervalTime = 70;
       if (counter > 80) intervalTime = 120;
