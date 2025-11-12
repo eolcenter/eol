@@ -60,7 +60,7 @@
     font-size: var(--prize-font-size);
     font-weight: 900;
     text-transform: uppercase;
-    color: white;
+    color: red;
     text-shadow:
       2px 2px 5px black,
       0 0 20px rgba(255,255,255,0.7);
@@ -70,7 +70,7 @@
 
   @keyframes bounceZoom {
     0%, 100% { transform: scale(1) translateY(0); }
-    50% { transform: scale(1.2) translateY(-20px); }
+    50% { transform: scale(2.1) translateY(-20px); }
   }
 
   h2 {
@@ -109,7 +109,7 @@
   }
 
   /* Cube colors */
-  #objectif .cube { background: black; }
+  #objectif .cube { background: blue; }
   #realise .cube { background: #006400; }  /* dark green */
   #restant .cube { background: #8B0000; }  /* dark red */
 
@@ -123,7 +123,7 @@
   }
 
   @media (max-width: 768px) {
-    :root { --cube-size: 70px; }
+    :root { --cube-size: 90px; }
     h2 { font-size: 30px; }
     :root { --title-font-size: 36px; --prize-font-size: 28px; }
   }
@@ -135,11 +135,11 @@
 <div class="prize-text">PRIZE : 100.000 Dhs</div>
 
 <!-- MOVING TITLE -->
-<div class="moving-title">Challenge the Sky is Limit</div>
+<div class="moving-title">Challenge SKY IS THE LIMIT</div>
 
 <!-- OBJECTIF -->
 <div class="section">
-  <h2>OBJECTIF</h2>
+  <h2>TARGET</h2>
   <div class="countdown" id="objectif"></div>
 </div>
 
