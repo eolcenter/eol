@@ -7,6 +7,8 @@
 <style>
   :root {
     --cube-size: 100px;
+    --title-font-size: 48px;
+    --prize-font-size: 36px;
   }
 
   body {
@@ -29,6 +31,47 @@
     0% { background-position: 0% 50%; }
     50% { background-position: 100% 50%; }
     100% { background-position: 0% 50%; }
+  }
+
+  /* ===== TITLE ANIMATIONS ===== */
+  .moving-title {
+    font-size: var(--title-font-size);
+    font-weight: 900;
+    text-transform: uppercase;
+    color: white;
+    text-shadow:
+      2px 2px 0 black,
+      -2px -2px 0 black,
+      2px -2px 0 black,
+      -2px 2px 0 black,
+      0 0 15px rgba(255,255,255,0.8);
+    white-space: nowrap;
+    position: absolute;
+    top: 50px;
+    animation: moveLeftRight 8s linear infinite;
+  }
+
+  @keyframes moveLeftRight {
+    0% { transform: translateX(-100%); }
+    50% { transform: translateX(50vw); }
+    100% { transform: translateX(-100%); }
+  }
+
+  .prize-text {
+    font-size: var(--prize-font-size);
+    font-weight: 900;
+    text-transform: uppercase;
+    color: white;
+    text-shadow:
+      2px 2px 5px black,
+      0 0 20px rgba(255,255,255,0.7);
+    animation: bounceZoom 2s ease-in-out infinite;
+    margin-bottom: 20px;
+  }
+
+  @keyframes bounceZoom {
+    0%, 100% { transform: scale(1) translateY(0); }
+    50% { transform: scale(1.2) translateY(-20px); }
   }
 
   h2 {
@@ -83,10 +126,17 @@
   @media (max-width: 768px) {
     :root { --cube-size: 70px; }
     h2 { font-size: 30px; }
+    :root { --title-font-size: 36px; --prize-font-size: 28px; }
   }
 </style>
 </head>
 <body>
+
+<!-- PRIZE TEXT -->
+<div class="prize-text">PRIZE : 100.000 Dhs</div>
+
+<!-- MOVING TITLE -->
+<div class="moving-title">Challenge the Sky is Limit</div>
 
 <!-- OBJECTIF -->
 <div class="section">
