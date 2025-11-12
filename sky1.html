@@ -61,10 +61,12 @@
     font-weight: 900;
     text-transform: uppercase;
     color: red;
+    text-align: center; /* center both lines */
     text-shadow:
       2px 2px 5px black,
       0 0 20px rgba(255,255,255,0.7);
     animation: bounceZoom 2s ease-in-out infinite;
+    line-height: 1.2; /* space between lines */
     margin-bottom: 20px;
   }
 
@@ -132,7 +134,10 @@
 <body>
 
 <!-- PRIZE TEXT -->
-<div class="prize-text">CHALLENGE SKY IS THE LIMIT PRIZE : 100.000 Dhs</div>
+<div class="prize-text">
+  CHALLENGE SKY IS THE LIMIT<br>
+  PRIZE : 100.000 Dhs
+</div>
 
 <!-- MOVING TITLE -->
 <div class="moving-title"></div>
