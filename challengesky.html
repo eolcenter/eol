@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Slot Machine Counters with GIF</title>
+<style>
+  :root {
+    --cube-size: 100px;
+  }
+
+  body {
+    margin: 0;
+    height: 100vh;
+    background: linear-gradient(270deg, #0066ff, #00ffcc, #ff00ff, #ff9900);
+    background-size: 800% 800%;
+    animation: gradientMove 10s ease infinite;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    color: white;
+    font-family: "Poppins", sans-serif;
+    overflow: hidden;
+    gap: 30px;
+    padding-top: 20px;
+  }
+
+  @keyframes gradientMove {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+
+  img#topGif {
+    max-width: 90%;
+    height: auto;
+    border-radius: 15px;
+    box-shadow: 0 0 25px rgba(255,255,255,0.7);
+  }
+
+  h2 {
+    font-size: 42px;
+    font-weight: 900;
+    text-transform: uppercase;
+    text-shadow: 0 4px 15px rgba(0,0,0,0.5);
+    margin-bottom: 20px;
+    letter-spacing: 3px;
+  }
+
+  .section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .countdown {
+    display: flex;
+    gap: 15px;
+  }
+
+  .cube {
+    width: var(--cube-size);
+    height: var(--cube-size);
+    color: #00ffcc;
+    border-radius: 10px;
+    font-size: 48px;
+    font-weight: 900;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 0 25px rgba(0, 255, 255, 0.4);
+    transform-style: preserve-3d;
+    transform: rotateX(0deg);
+  }
+
+  /* Cube colors */
+  #objectif .cube { background: black; }
+  #realise .cube { background: #006400; }  /* dark green */
+  #restant .cube { background: #8B0000; }  /* dark red */
+
+  .cube.spin {
+    animation: fastSpin 0.08s linear infinite;
+  }
+
+  @keyframes fastSpin {
+    0% { transform: rotateX(0deg); }
+    100% { transform: rotateX(360deg); }
+  }
+
+  @media (max-width: 768px) {
+    :root { --cube-size: 70px; }
+    h2 { font-size: 30px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- GIF at the top -->
+<img id="topGif" src="https://i.ibb.co/VYs68hCh/2025-11-12-Sky-is-the-Limit.gif" alt="Sky is the Limit GIF">
+
+<!-- OBJECTIF -->
+<div class="section">
+  <h2>OBJECTIF</h2>
+  <div class="countdown" id="objectif"></div>
+</div>
+
+<!-- RÉALISÉ -->
+<div class="section">
+  <h2>RÉALISÉ</h2>
+  <div class="countdown" id="realise"></div>
+</div>
+
+<!-- RESTANT -->
+<div class="section">
+  <h2>RESTANT</h2>
+  <div class="countdown" id="restant"></div>
+</div>
+
+<script>
+/* ====================== CONFIG ====================== */
+const objectifValue = 2500;
+const realiseValue = 300;
+const digits = 4;
+const restantValue = objectifValue - realiseValue;
+
+/* ====================== FUNCTIONS ====================== */
+function pad(num) {
+  return num.toString().padStart(digits, "0");
+}
+
+function createCubes(id) {
+  const container = document.getElementById(id);
+  for (let i = 0; i < digits; i++) {
+    const cube = document.createElement("div");
+    cube.className = "cube";
+    cube.textContent = "0";
+    container.appendChild(cube);
+  }
+}
+
+function slotRoll(id, targetValue) {
+  const cubes = document.querySelectorAll(`#${id} .cube`);
+  const strTarget = pad(targetValue);
+  
+  cubes.forEach((cube, index) => {
+    cube.classList.add("spin");
+
+    let counter = 0;
+    let intervalTime = 20;
+
+    const interval = setInterval(() => {
+      cube.textContent = Math.floor(Math.random() * 10);
+      counter++;
+
+      // Gradually slow down
+      if (counter > 20) intervalTime = 40;
+      if (counter > 50) intervalTime = 70;
+      if (counter > 80) intervalTime = 120;
+      if (counter > 100) intervalTime = 200;
+
+      if (counter > 120) {
+        clearInterval(interval);
+        cube.classList.remove("spin");
+        cube.textContent = strTarget[index];
+        cube.style.boxShadow = "0 0 35px rgba(255,255,255,0.8)";
+        cube.style.color = "#fff";
+      }
+    }, intervalTime);
+  });
+}
+
+/* ====================== INIT ====================== */
+createCubes("objectif");
+createCubes("realise");
+createCubes("restant");
+
+slotRoll("objectif", objectifValue);
+setTimeout(() => slotRoll("realise", realiseValue), 400);
+setTimeout(() => slotRoll("restant", restantValue), 800);
+</script>
+
+</body>
+</html>
