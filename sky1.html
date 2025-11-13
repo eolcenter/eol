@@ -23,16 +23,9 @@
     color: white;
     font-family: "Poppins", sans-serif;
     overflow: hidden;
-    gap: 50px;
+    gap: 40px;
   }
 
-  @keyframes gradientMove {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
-  }
-
-  /* ===== TITLE ANIMATIONS ===== */
   .moving-title {
     font-size: var(--title-font-size);
     font-weight: 900;
@@ -61,12 +54,12 @@
     font-weight: 900;
     text-transform: uppercase;
     color: red;
-    text-align: center; /* center both lines */
+    text-align: center;
     text-shadow:
       2px 2px 5px black,
       0 0 20px rgba(255,255,255,0.7);
     animation: bounceZoom 12s ease-in-out infinite;
-    line-height: 1.2; /* space between lines */
+    line-height: 1.2;
     margin-bottom: 20px;
   }
 
@@ -113,8 +106,9 @@
 
   /* Cube colors */
   #objectif .cube { background: blue; }
-  #realise .cube { background: #006400; }  /* dark green */
-  #restant .cube { background: #8B0000; }  /* dark red */
+  #realise .cube { background: #006400; }
+  #restant .cube { background: #8B0000; }
+  #ecart .cube { background: purple; }
 
   .cube.spin {
     animation: fastSpin 0.08s linear infinite;
@@ -157,8 +151,14 @@
 
 <!-- RESTANT -->
 <div class="section">
-  <h2>RAF</h2>
+  <h2>RAF (global)</h2>
   <div class="countdown" id="restant"></div>
+</div>
+
+<!-- ÉCART / 34 -->
+<div class="section">
+  <h2>RAF (PAR JOUR)</h2>
+  <div class="countdown" id="ecart"></div>
 </div>
 
 <script>
@@ -167,6 +167,7 @@ const objectifValue = 2500;
 const realiseValue = 346;
 const digits = 4;
 const restantValue = objectifValue - realiseValue;
+const ecartValue = Math.floor(restantValue / 31);
 
 /* ====================== FUNCTIONS ====================== */
 function pad(num) {
@@ -218,10 +219,12 @@ function slotRoll(id, targetValue) {
 createCubes("objectif");
 createCubes("realise");
 createCubes("restant");
+createCubes("ecart");
 
 slotRoll("objectif", objectifValue);
 setTimeout(() => slotRoll("realise", realiseValue), 400);
 setTimeout(() => slotRoll("restant", restantValue), 800);
+setTimeout(() => slotRoll("ecart", ecartValue), 1200);
 </script>
 
 </body>
