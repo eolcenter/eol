@@ -4,14 +4,13 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Team Display TV</title>
-
 <style>
 /* -------------------- ADJUSTABLE SIZES -------------------- */
 :root {
-  --banner-height: 120px;       /* Height of banners */
-  --banner-font-size: 3.5rem;   /* Font size of names and numbers */
-  --team-title-size: 6rem;      /* Font size for team titles */
-  --banner-padding: 30px;       /* Padding inside banners */
+  --banner-height: 120px;
+  --banner-font-size: 3.5rem;
+  --team-title-size: 6rem;
+  --banner-padding: 30px;
 }
 
 /* ---------------- BACKGROUND ANIMATION ---------------- */
@@ -43,10 +42,7 @@ body {
   opacity: 0;
   transition: opacity 1s ease;
 }
-
-.page.active {
-  opacity: 1;
-}
+.page.active { opacity: 1; }
 
 /* --------------- LEFT IMAGE AREA ---------------- */
 .left-side {
@@ -94,7 +90,7 @@ body {
 .banner {
   width: 100%;
   height: var(--banner-height);
-  background: linear-gradient(145deg, #4f4f4f, #a6a6a6, #3a3a3a); /* Dark silver metallic */
+  background: linear-gradient(145deg, #4f4f4f, #a6a6a6, #3a3a3a);
   border-radius: 15px;
   display: flex;
   align-items: center;
@@ -104,8 +100,6 @@ body {
   padding: 0 var(--banner-padding);
   animation: fadeUp 0.8s ease forwards;
   opacity: 0;
-  
-  /* 3D metallic effect */
   box-shadow: 4px 4px 15px rgba(0,0,0,0.5), inset -2px -2px 8px rgba(255,255,255,0.2);
   border: 1px solid rgba(255,255,255,0.2);
   position: relative;
@@ -140,6 +134,9 @@ body {
 }
 
 .name { width: 45%; }
+.number { width: 20%; text-align: right; }
+
+/* ----------------- 3D BATTERY BAR ----------------- */
 .battery-container {
   width: 35%;
   height: 28px;
@@ -147,98 +144,98 @@ body {
   border-radius: 6px;
   overflow: hidden;
   margin-right: 20px;
+  box-shadow: inset 0 2px 4px rgba(0,0,0,0.5), inset 0 -2px 4px rgba(255,255,255,0.2);
+  border: 1px solid rgba(255,255,255,0.3);
+  position: relative;
 }
+
 .battery-bar {
   height: 100%;
   width: 0%;
-  background: red;
+  border-radius: 4px;
   transition: width 1s ease, background 1s ease;
+  
+  /* Base metallic gradient for all bars */
+  background: linear-gradient(to bottom, rgba(255,255,255,0.4), rgba(0,0,0,0.2));
+  box-shadow:
+    inset 0 2px 4px rgba(255,255,255,0.6),
+    inset 0 -2px 4px rgba(0,0,0,0.5),
+    0 2px 6px rgba(0,0,0,0.3);
 }
-.number { width: 20%; text-align: right; }
 
+/* Colored metallic gradients */
+.battery-bar.red { background: linear-gradient(to bottom, #ff4d4d, #990000); }
+.battery-bar.orange { background: linear-gradient(to bottom, #ff9900, #cc6600); }
+.battery-bar.yellow { background: linear-gradient(to bottom, #ffff66, #cccc00); }
+.battery-bar.green { background: linear-gradient(to bottom, #66ff66, #009900); }
 </style>
 </head>
 <body>
 
-<!-- ----------------------------------------
-       PAGE 1 — TEAM SKY
-------------------------------------------- -->
 <div class="page active" id="page1">
   <div class="left-side">
     <div class="team-title">TEAM MEHDI 30/400 </div>
     <img class="slide-img" src="https://imgur.com/c5J7f14.png">
   </div>
-
   <div class="right-side" id="team1-banners"></div>
 </div>
 
-<!-- ----------------------------------------
-       PAGE 2 — TEAM MANSOU
-------------------------------------------- -->
 <div class="page" id="page2">
   <div class="left-side">
     <div class="team-title">TEAM SELMA 28/300 </div>
     <img class="slide-img" src="https://imgur.com/PlNrlNO.png">
   </div>
-
   <div class="right-side" id="team2-banners"></div>
 </div>
 
-<!-- ----------------------------------------
-       PAGE 3 — TEAM SELMA
-------------------------------------------- -->
 <div class="page" id="page3">
   <div class="left-side">
     <div class="team-title">TEAM MANSOU 5/120 </div>
     <img class="slide-img" src="https://imgur.com/BoS007V.png">
   </div>
-
   <div class="right-side" id="team3-banners"></div>
 </div>
 
 <script>
-/* ------------------------------------------
-   TEAM DATA
-------------------------------------------- */
 const teamData = {
   team1: [
-    { name: "ILHAM ", value: 80% },
-    { name: "BADR ", value: 22% },
-    { name: "TAHA ", value: 12% },
-    { name: "LEONIE", value: 45% },
-    { name: "SARA", value: 70% },
-    { name: "HALIM", value: 10% },
-    { name: "NAOUFAL", value: 66% },
-    { name: "GHISLAINE", value: 32% },
-    { name: "SOUFIANE", value: 5% }
+    { name: "ILHAM", value: 80 },
+    { name: "BADR", value: 22 },
+    { name: "TAHA", value: 12 },
+    { name: "LEONIE", value: 45 },
+    { name: "SARA", value: 70 },
+    { name: "HALIM", value: 10 },
+    { name: "NAOUFAL", value: 66 },
+    { name: "GHISLAINE", value: 32 },
+    { name: "SOUFIANE", value: 5 }
   ],
-
   team2: [
-    { name: "HAYAT", value: 55% },
-    { name: "YASSINE", value: 12% },
-    { name: "HASSAN", value: 77% },
-    { name: "SALAH", value: 30% },
-    { name: "RANIA", value: 5% },
-    { name: "HICHAM", value: 63% },
-    { name: "AYOUB", value: 41% },
-    { name: "ADAM", value: 11% },
-    
+    { name: "HAYAT", value: 55 },
+    { name: "YASSINE", value: 12 },
+    { name: "HASSAN", value: 77 },
+    { name: "SALAH", value: 30 },
+    { name: "RANIA", value: 5 },
+    { name: "HICHAM", value: 63 },
+    { name: "AYOUB", value: 41 },
+    { name: "ADAM", value: 11 }
   ],
-
   team3: [
-    { name: "AMINE", value: 14% },
-    { name: "ASMAE", value: 40% },
-    { name: "SENY", value: 90% },
-    { name: "YOUSSEF", value: 65% },
-    { name: "HASNA", value: 3% },
-    { name: "MAMADOU", value: 49% },
-    
+    { name: "AMINE", value: 14 },
+    { name: "ASMAE", value: 40 },
+    { name: "SENY", value: 90 },
+    { name: "YOUSSEF", value: 65 },
+    { name: "HASNA", value: 3 },
+    { name: "MAMADOU", value: 49 }
   ]
 };
 
-/* ------------------------------------------
-   CREATE BANNERS FUNCTION
-------------------------------------------- */
+function getBatteryColor(value) {
+  if (value <= 15) return "red";
+  if (value <= 35) return "orange";
+  if (value <= 60) return "yellow";
+  return "green";
+}
+
 function createBanners(containerId, data) {
   const container = document.getElementById(containerId);
   container.innerHTML = "";
@@ -248,19 +245,15 @@ function createBanners(containerId, data) {
     banner.className = "banner";
     banner.style.animationDelay = (i * 0.25) + "s";
 
-    let barWidth = Math.min(item.value, 100);
-    let color = "red";
-    if (item.value >= 60) color = "green";
-    else if (item.value >= 15) color = "yellow";
+    const color = getBatteryColor(item.value);
 
     banner.innerHTML = `
       <div class="name">${item.name}</div>
       <div class="battery-container">
-        <div class="battery-bar" style="width:${barWidth}%; background:${color}"></div>
+        <div class="battery-bar ${color}" style="width:${item.value}%"></div>
       </div>
-      <div class="number">${item.value}</div>
+      <div class="number">${item.value}%</div>
     `;
-
     container.appendChild(banner);
   });
 }
@@ -269,19 +262,13 @@ createBanners("team1-banners", teamData.team1);
 createBanners("team2-banners", teamData.team2);
 createBanners("team3-banners", teamData.team3);
 
-/* ------------------------------------------
-   PAGE ROTATION (EVERY 15 SECONDS)
-------------------------------------------- */
+/* PAGE ROTATION */
 let currentPage = 1;
 setInterval(() => {
   document.getElementById("page" + currentPage).classList.remove("active");
-
-  currentPage++;
-  if (currentPage > 3) currentPage = 1;
-
+  currentPage = currentPage < 3 ? currentPage + 1 : 1;
   document.getElementById("page" + currentPage).classList.add("active");
-
-}, 15000); // 15 seconds
+}, 15000);
 </script>
 
 </body>
