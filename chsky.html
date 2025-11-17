@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Team Results Display</title>
+
+<style>
+    /* === COLORFUL BACKGROUND ANIMATION === */
+    body {
+        margin: 0;
+        overflow: hidden;
+        background: linear-gradient(270deg, #ff0000, #ff7f00, #ffff00, #00ff00, #0000ff, #4b0082, #9400d3);
+        background-size: 2000% 200%;
+        animation: gradientShift 20s ease infinite;
+        font-family: Arial, sans-serif;
+    }
+
+    @keyframes gradientShift {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
+    }
+
+    .page {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-start;
+        opacity: 0;
+        transition: opacity 1s;
+    }
+
+    .active { opacity: 1; }
+
+    /* TEAM TITLE */
+    .team-name {
+        font-size: 52px;
+        font-weight: bold;
+        color: white;
+        margin-top: 30px;
+        text-shadow: 4px 4px 10px black;
+    }
+
+    /* SLIDE-IN IMAGE */
+    .team-image {
+        position: relative;
+        width: 350px;
+        margin-top: 10px;
+        left: 100%;
+        animation: slideIn 1.6s forwards;
+        filter: drop-shadow(0 0 12px black);
+    }
+
+    @keyframes slideIn {
+        to { left: 0; }
+    }
+
+    /* BANNERS */
+    .banner-container {
+        width: 80%;
+        margin-top: 30px;
+    }
+
+    .banner {
+        width: 100%;
+        height: 70px;
+        background: rgba(0,0,0,0.45);
+        margin: 8px 0;
+        display: flex;
+        align-items: center;
+        padding: 0 20px;
+        border-radius: 10px;
+        color: white;
+        font-size: 32px;
+        font-weight: bold;
+        opacity: 0;
+        transform: translateY(30px);
+        animation: bannerIn 1s forwards;
+    }
+
+    @keyframes bannerIn {
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .name {
+        width: 70%;
+    }
+    .number {
+        width: 30%;
+        text-align: right;
+    }
+</style>
+</head>
+
+<body>
+
+<!-- PAGE 1 - TEAM MEHDI -->
+<div class="page active" id="page1">
+    <div class="team-name">TEAM MEHDI</div>
+    <img class="team-image" src="https://imgur.com/c5J7f14.png">
+
+    <div class="banner-container">
+        <!-- 9 banners -->
+        <script>
+            const banners1 = [
+                ["Name 1", "120"],
+                ["Name 2", "98"],
+                ["Name 3", "110"],
+                ["Name 4", "95"],
+                ["Name 5", "80"],
+                ["Name 6", "77"],
+                ["Name 7", "60"],
+                ["Name 8", "55"],
+                ["Name 9", "40"]
+            ];
+        </script>
+    </div>
+</div>
+
+<!-- PAGE 2 - TEAM MANSOU -->
+<div class="page" id="page2">
+    <div class="team-name">TEAM MANSOU</div>
+    <img class="team-image" src="https://imgur.com/PlNrlNO.png">
+
+    <div class="banner-container">
+        <script>
+            const banners2 = [
+                ["Name A", "145"],
+                ["Name B", "120"],
+                ["Name C", "110"],
+                ["Name D", "100"],
+                ["Name E", "90"],
+                ["Name F", "85"],
+                ["Name G", "70"],
+                ["Name H", "60"],
+                ["Name I", "50"]
+            ];
+        </script>
+    </div>
+</div>
+
+<!-- PAGE 3 - TEAM SELMA -->
+<div class="page" id="page3">
+    <div class="team-name">TEAM SELMA</div>
+    <img class="team-image" src="https://imgur.com/BoS007V.png">
+
+    <div class="banner-container">
+        <script>
+            const banners3 = [
+                ["Alpha", "150"],
+                ["Beta", "130"],
+                ["Gamma", "115"],
+                ["Delta", "90"],
+                ["Epsilon", "88"],
+                ["Zeta", "72"],
+                ["Eta", "60"],
+                ["Theta", "50"],
+                ["Iota", "40"]
+            ];
+        </script>
+    </div>
+</div>
+
+<script>
+    // Function to populate banners dynamically
+    function loadBanners(pageId, data) {
+        const container = document.querySelector(`#${pageId} .banner-container`);
+        data.forEach((b, i) => {
+            const el = document.createElement("div");
+            el.className = "banner";
+            el.style.animationDelay = (i * 0.5) + "s";
+            el.innerHTML = `<div class="name">${b[0]}</div><div class="number">${b[1]}</div>`;
+            container.appendChild(el);
+        });
+    }
+
+    loadBanners("page1", banners1);
+    loadBanners("page2", banners2);
+    loadBanners("page3", banners3);
+
+    // PAGE SWITCHING EVERY 15 SECONDS
+    const pages = ["page1", "page2", "page3"];
+    let current = 0;
+
+    setInterval(() => {
+        document.getElementById(pages[current]).classList.remove("active");
+        current = (current + 1) % pages.length;
+        document.getElementById(pages[current]).classList.add("active");
+    }, 15000);
+</script>
+
+</body>
+</html>
