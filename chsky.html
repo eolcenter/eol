@@ -3,196 +3,250 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Team Results Display</title>
+<title>Team Display TV</title>
 
 <style>
-    /* === COLORFUL BACKGROUND ANIMATION === */
-    body {
-        margin: 0;
-        overflow: hidden;
-        background: linear-gradient(270deg, #ff0000, #ff7f00, #ffff00, #00ff00, #0000ff, #4b0082, #9400d3);
-        background-size: 2000% 200%;
-        animation: gradientShift 20s ease infinite;
-        font-family: Arial, sans-serif;
-    }
+/* ---------------- BACKGROUND ANIMATION ---------------- */
+body {
+  margin: 0;
+  height: 100vh;
+  overflow: hidden;
+  background: linear-gradient(-45deg, #1a2a6c, #b21f1f, #fdbb2d, #21d4fd, #b721ff);
+  background-size: 400% 400%;
+  animation: gradientMove 12s ease infinite;
+  font-family: 'Poppins', sans-serif;
+}
 
-    @keyframes gradientShift {
-        0% { background-position: 0% 50%; }
-        50% { background-position: 100% 50%; }
-        100% { background-position: 0% 50%; }
-    }
+@keyframes gradientMove {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
 
-    .page {
-        position: absolute;
-        inset: 0;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: flex-start;
-        opacity: 0;
-        transition: opacity 1s;
-    }
+/* --------------- PAGE CONTAINER ---------------- */
+.page {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  padding-left: 60px;
+  padding-right: 60px;
+  box-sizing: border-box;
+  opacity: 0;
+  transition: opacity 1s ease;
+}
 
-    .active { opacity: 1; }
+.page.active {
+  opacity: 1;
+}
 
-    /* TEAM TITLE */
-    .team-name {
-        font-size: 52px;
-        font-weight: bold;
-        color: white;
-        margin-top: 30px;
-        text-shadow: 4px 4px 10px black;
-    }
+/* --------------- LEFT IMAGE AREA ---------------- */
+.left-side {
+  width: 40%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  position: relative;
+}
 
-    /* SLIDE-IN IMAGE */
-    .team-image {
-        position: relative;
-        width: 350px;
-        margin-top: 10px;
-        left: 100%;
-        animation: slideIn 1.6s forwards;
-        filter: drop-shadow(0 0 12px black);
-    }
+.team-title {
+  font-size: 5rem;
+  font-weight: 900;
+  color: white;
+  text-shadow: 4px 4px 10px black;
+  margin-bottom: 30px;
+}
 
-    @keyframes slideIn {
-        to { left: 0; }
-    }
+.slide-img {
+  width: 90%;
+  max-width: 480px;
+  height: auto;
+  position: relative;
+  opacity: 0;
+  animation: slideIn 2.5s forwards;
+}
 
-    /* BANNERS */
-    .banner-container {
-        width: 80%;
-        margin-top: 30px;
-    }
+@keyframes slideIn {
+  0% { transform: translateX(100%); opacity: 0; }
+  100% { transform: translateX(0%); opacity: 1; }
+}
 
-    .banner {
-        width: 100%;
-        height: 70px;
-        background: rgba(0,0,0,0.45);
-        margin: 8px 0;
-        display: flex;
-        align-items: center;
-        padding: 0 20px;
-        border-radius: 10px;
-        color: white;
-        font-size: 32px;
-        font-weight: bold;
-        opacity: 0;
-        transform: translateY(30px);
-        animation: bannerIn 1s forwards;
-    }
+/* ------------ RIGHT SIDE BANNERS ------------- */
+.right-side {
+  width: 60%;
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+  padding-right: 40px;
+}
 
-    @keyframes bannerIn {
-        to {
-            opacity: 1;
-            transform: translateY(0);
-        }
-    }
+.banner {
+  width: 100%;
+  height: 95px;
+  background: rgba(0, 0, 0, 0.85); /* BLACK BANNER */
+  border-radius: 15px;
+  display: flex;
+  align-items: center;
+  font-size: 2.8rem;
+  font-weight: 700;
+  color: white; /* WHITE TEXT */
+  padding: 0 25px;
+  animation: fadeUp 0.8s ease forwards;
+  opacity: 0;
+}
 
-    .name {
-        width: 70%;
-    }
-    .number {
-        width: 30%;
-        text-align: right;
-    }
+@keyframes fadeUp {
+  from { transform: translateY(25px); opacity: 0; }
+  to { transform: translateY(0px); opacity: 1; }
+}
+
+.name { width: 45%; }
+.battery-container {
+  width: 35%;
+  height: 28px;
+  background: rgba(0,0,0,0.25);
+  border-radius: 6px;
+  overflow: hidden;
+  margin-right: 20px;
+}
+.battery-bar {
+  height: 100%;
+  width: 0%;
+  background: red;
+  transition: width 1s ease, background 1s ease;
+}
+.number { width: 20%; text-align: right; }
+
 </style>
 </head>
-
 <body>
 
-<!-- PAGE 1 - TEAM MEHDI -->
+<!-- ----------------------------------------
+       PAGE 1 — TEAM SKY
+------------------------------------------- -->
 <div class="page active" id="page1">
-    <div class="team-name">TEAM MEHDI</div>
-    <img class="team-image" src="https://imgur.com/c5J7f14.png">
+  <div class="left-side">
+    <div class="team-title">TEAM SKY</div>
+    <img class="slide-img" src="https://imgur.com/c5J7f14.png">
+  </div>
 
-    <div class="banner-container">
-        <!-- 9 banners -->
-        <script>
-            const banners1 = [
-                ["Name 1", "120"],
-                ["Name 2", "98"],
-                ["Name 3", "110"],
-                ["Name 4", "95"],
-                ["Name 5", "80"],
-                ["Name 6", "77"],
-                ["Name 7", "60"],
-                ["Name 8", "55"],
-                ["Name 9", "40"]
-            ];
-        </script>
-    </div>
+  <div class="right-side" id="team1-banners"></div>
 </div>
 
-<!-- PAGE 2 - TEAM MANSOU -->
+<!-- ----------------------------------------
+       PAGE 2 — TEAM MANSOU
+------------------------------------------- -->
 <div class="page" id="page2">
-    <div class="team-name">TEAM MANSOU</div>
-    <img class="team-image" src="https://imgur.com/PlNrlNO.png">
+  <div class="left-side">
+    <div class="team-title">TEAM MANSOU</div>
+    <img class="slide-img" src="https://imgur.com/PlNrlNO.png">
+  </div>
 
-    <div class="banner-container">
-        <script>
-            const banners2 = [
-                ["Name A", "145"],
-                ["Name B", "120"],
-                ["Name C", "110"],
-                ["Name D", "100"],
-                ["Name E", "90"],
-                ["Name F", "85"],
-                ["Name G", "70"],
-                ["Name H", "60"],
-                ["Name I", "50"]
-            ];
-        </script>
-    </div>
+  <div class="right-side" id="team2-banners"></div>
 </div>
 
-<!-- PAGE 3 - TEAM SELMA -->
+<!-- ----------------------------------------
+       PAGE 3 — TEAM SELMA
+------------------------------------------- -->
 <div class="page" id="page3">
-    <div class="team-name">TEAM SELMA</div>
-    <img class="team-image" src="https://imgur.com/BoS007V.png">
+  <div class="left-side">
+    <div class="team-title">TEAM SELMA</div>
+    <img class="slide-img" src="https://imgur.com/BoS007V.png">
+  </div>
 
-    <div class="banner-container">
-        <script>
-            const banners3 = [
-                ["Alpha", "150"],
-                ["Beta", "130"],
-                ["Gamma", "115"],
-                ["Delta", "90"],
-                ["Epsilon", "88"],
-                ["Zeta", "72"],
-                ["Eta", "60"],
-                ["Theta", "50"],
-                ["Iota", "40"]
-            ];
-        </script>
-    </div>
+  <div class="right-side" id="team3-banners"></div>
 </div>
 
 <script>
-    // Function to populate banners dynamically
-    function loadBanners(pageId, data) {
-        const container = document.querySelector(`#${pageId} .banner-container`);
-        data.forEach((b, i) => {
-            const el = document.createElement("div");
-            el.className = "banner";
-            el.style.animationDelay = (i * 0.5) + "s";
-            el.innerHTML = `<div class="name">${b[0]}</div><div class="number">${b[1]}</div>`;
-            container.appendChild(el);
-        });
-    }
+/* ------------------------------------------
+   TEAM DATA
+------------------------------------------- */
+const teamData = {
+  team1: [
+    { name: "Sofia", value: 80 },
+    { name: "Yassine", value: 22 },
+    { name: "Mehdi", value: 12 },
+    { name: "Amal", value: 45 },
+    { name: "Nadia", value: 70 },
+    { name: "Othmane", value: 10 },
+    { name: "Ilyas", value: 66 },
+    { name: "Sarra", value: 32 },
+    { name: "Hiba", value: 5 }
+  ],
 
-    loadBanners("page1", banners1);
-    loadBanners("page2", banners2);
-    loadBanners("page3", banners3);
+  team2: [
+    { name: "Mansou 1", value: 55 },
+    { name: "Mansou 2", value: 12 },
+    { name: "Mansou 3", value: 77 },
+    { name: "Mansou 4", value: 30 },
+    { name: "Mansou 5", value: 5 },
+    { name: "Mansou 6", value: 63 },
+    { name: "Mansou 7", value: 41 },
+    { name: "Mansou 8", value: 11 },
+    { name: "Mansou 9", value: 80 }
+  ],
 
-    // PAGE SWITCHING EVERY 15 SECONDS
-    const pages = ["page1", "page2", "page3"];
-    let current = 0;
+  team3: [
+    { name: "Selma 1", value: 14 },
+    { name: "Selma 2", value: 40 },
+    { name: "Selma 3", value: 90 },
+    { name: "Selma 4", value: 65 },
+    { name: "Selma 5", value: 3 },
+    { name: "Selma 6", value: 49 },
+    { name: "Selma 7", value: 60 },
+    { name: "Selma 8", value: 15 },
+    { name: "Selma 9", value: 7 }
+  ]
+};
 
-    setInterval(() => {
-        document.getElementById(pages[current]).classList.remove("active");
-        current = (current + 1) % pages.length;
-        document.getElementById(pages[current]).classList.add("active");
-    }, 15000);
+/* ------------------------------------------
+   CREATE BANNERS FUNCTION
+------------------------------------------- */
+function createBanners(containerId, data) {
+  const container = document.getElementById(containerId);
+  container.innerHTML = "";
+
+  data.forEach((item, i) => {
+    const banner = document.createElement("div");
+    banner.className = "banner";
+    banner.style.animationDelay = (i * 0.25) + "s";
+
+    let barWidth = Math.min(item.value, 100);
+    let color = "red";
+    if (item.value >= 60) color = "green";
+    else if (item.value >= 15) color = "yellow";
+
+    banner.innerHTML = `
+      <div class="name">${item.name}</div>
+      <div class="battery-container">
+        <div class="battery-bar" style="width:${barWidth}%; background:${color}"></div>
+      </div>
+      <div class="number">${item.value}</div>
+    `;
+
+    container.appendChild(banner);
+  });
+}
+
+createBanners("team1-banners", teamData.team1);
+createBanners("team2-banners", teamData.team2);
+createBanners("team3-banners", teamData.team3);
+
+/* ------------------------------------------
+   PAGE ROTATION (EVERY 15 SECONDS)
+------------------------------------------- */
+let currentPage = 1;
+setInterval(() => {
+  document.getElementById("page" + currentPage).classList.remove("active");
+
+  currentPage++;
+  if (currentPage > 3) currentPage = 1;
+
+  document.getElementById("page" + currentPage).classList.add("active");
+
+}, 15000); // 15 seconds
 </script>
 
 </body>
