@@ -3,16 +3,15 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Team Results Display</title>
+<title>3 Page Team Diaporama</title>
 
 <style>
   body {
     margin: 0;
     overflow: hidden;
     font-family: Arial, Helvetica, sans-serif;
-    color: white;
 
-    /* === ANIMATED MULTI-COLOR BACKGROUND === */
+    /* Animated Background */
     background: linear-gradient(45deg, #ff0066, #ffcc00, #33cc33, #0066ff, #6600ff, #ff0099);
     background-size: 500% 500%;
     animation: gradientFlow 12s ease infinite;
@@ -26,11 +25,32 @@
     100% { background-position: 0% 50%; }
   }
 
-  /* === IMAGE SLIDE FROM RIGHT TO LEFT === */
-  #side-image {
+  /* Pages */
+  .page {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    display: none;
+  }
+
+  .activePage {
+    display: block;
+    animation: fadeInPage 1s forwards;
+  }
+
+  @keyframes fadeInPage {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  /* Sliding Image */
+  .side-image {
     position: absolute;
     top: 120px;
-    left: -400px; /* final position */
+    left: -400px;
     width: 350px;
     height: auto;
     animation: slideIn 2.5s ease forwards;
@@ -41,30 +61,31 @@
     to { left: -400px; }
   }
 
-  /* === RECTANGLE ABOVE THE IMAGE === */
-  #title-rectangle {
+  /* Rectangle Title */
+  .title-rectangle {
     position: absolute;
     top: 20px;
     left: 0;
     width: 350px;
     height: 70px;
-    background: rgba(255, 255, 255, 0.15);
+    background: rgba(0, 0, 0, 0.35);
     border: 2px solid white;
     border-radius: 10px;
+    color: white;
     display: flex;
     justify-content: center;
     align-items: center;
     opacity: 0;
-    animation: fadeIn 2s ease 2.5s forwards;
+    animation: fadeInRect 2s ease 2.5s forwards;
   }
 
-  @keyframes fadeIn {
+  @keyframes fadeInRect {
     from { opacity: 0; }
     to { opacity: 1; }
   }
 
-  /* === BANNERS CONTAINER === */
-  #banners {
+  /* Banners */
+  .banners {
     position: absolute;
     top: 250px;
     left: 380px;
@@ -76,7 +97,7 @@
     height: 120px;
     display: flex;
     align-items: center;
-    background: rgba(255,255,255,0.05);
+    background: rgba(0,0,0,0.35);
     border-left: 6px solid #0af;
     margin-bottom: 10px;
     transform: translateY(800px);
@@ -87,6 +108,7 @@
     width: 70%;
     font-size: 48px;
     padding-left: 20px;
+    color: white;
   }
 
   .number {
@@ -103,7 +125,6 @@
     background: rgba(255,255,255,0.2);
   }
 
-  /* === ANIMATION FOR BANNERS APPEARING ONE BY ONE === */
   @keyframes bannerRise {
     from { transform: translateY(800px); opacity: 0; }
     to { transform: translateY(0); opacity: 1; }
@@ -112,42 +133,100 @@
 </head>
 <body>
 
-<!-- THE SLIDING IMAGE -->
-<img id="side-image" src="YOUR-IMAGE.png">
+<!-- PAGE 1 — TEAM TAYLOR -->
+<div class="page activePage" id="page1">
+  <img class="side-image" src="https://imgur.com/c5J7f14.png">
+  <div class="title-rectangle"><h2>Team Taylor</h2></div>
 
-<!-- RECTANGLE ABOVE -->
-<div id="title-rectangle">
-  <h2 style="font-size: 32px; margin: 0;">TEAM RESULTS</h2>
+  <div class="banners">
+      <!-- Repeat banners -->
+      <div class="banner" style="animation: bannerRise 1s ease forwards 3s;"><div class="name">Member 1</div><div class="number">120</div></div>
+      <div class="line"></div>
+      <div class="banner" style="animation: bannerRise 1s ease forwards 4s;"><div class="name">Member 2</div><div class="number">115</div></div>
+      <div class="line"></div>
+      <div class="banner" style="animation: bannerRise 1s ease forwards 5s;"><div class="name">Member 3</div><div class="number">98</div></div>
+      <div class="line"></div>
+      <div class="banner" style="animation: bannerRise 1s ease forwards 6s;"><div class="name">Member 4</div><div class="number">94</div></div>
+      <div class="line"></div>
+      <div class="banner" style="animation: bannerRise 1s ease forwards 7s;"><div class="name">Member 5</div><div class="number">80</div></div>
+      <div class="line"></div>
+      <div class="banner" style="animation: bannerRise 1s ease forwards 8s;"><div class="name">Member 6</div><div class="number">74</div></div>
+      <div class="line"></div>
+      <div class="banner" style="animation: bannerRise 1s ease forwards 9s;"><div class="name">Member 7</div><div class="number">65</div></div>
+      <div class="line"></div>
+      <div class="banner" style="animation: bannerRise 1s ease forwards 10s;"><div class="name">Member 8</div><div class="number">52</div></div>
+      <div class="line"></div>
+      <div class="banner" style="animation: bannerRise 1s ease forwards 11s;"><div class="name">Member 9</div><div class="number">48</div></div>
+  </div>
 </div>
 
-<!-- BANNERS -->
-<div id="banners">
-  <div class="banner" style="animation: bannerRise 1s ease forwards 3s;"><div class="name">ILHAM</div><div class="number">120</div></div>
-  <div class="line"></div>
+<!-- PAGE 2 — TEAM MANSOU -->
+<div class="page" id="page2">
+  <img class="side-image" src="https://imgur.com/PlNrlNO.png">
+  <div class="title-rectangle"><h2>Team Mansou</h2></div>
 
-  <div class="banner" style="animation: bannerRise 1s ease forwards 4s;"><div class="name">HALIM </div><div class="number">115</div></div>
-  <div class="line"></div>
-
-  <div class="banner" style="animation: bannerRise 1s ease forwards 5s;"><div class="name">SOUFIANE</div><div class="number">98</div></div>
-  <div class="line"></div>
-
-  <div class="banner" style="animation: bannerRise 1s ease forwards 6s;"><div class="name">NAOUFAL </div><div class="number">94</div></div>
-  <div class="line"></div>
-
-  <div class="banner" style="animation: bannerRise 1s ease forwards 7s;"><div class="name">GHISLAINE</div><div class="number">80</div></div>
-  <div class="line"></div>
-
-  <div class="banner" style="animation: bannerRise 1s ease forwards 8s;"><div class="name">BADR </div><div class="number">74</div></div>
-  <div class="line"></div>
-
-  <div class="banner" style="animation: bannerRise 1s ease forwards 9s;"><div class="name">LEONIE</div><div class="number">65</div></div>
-  <div class="line"></div>
-
-  <div class="banner" style="animation: bannerRise 1s ease forwards 10s;"><div class="name">SARAH </div><div class="number">52</div></div>
-  <div class="line"></div>
-
-  <div class="banner" style="animation: bannerRise 1s ease forwards 11s;"><div class="name">TAHA</div><div class="number">48</div></div>
+  <div class="banners">
+      <!-- SAME banners (you can edit numbers later) -->
+      <div class="banner" style="animation: bannerRise 1s ease forwards 3s;"><div class="name">Member 1</div><div class="number">120</div></div>
+      <div class="line"></div>
+      <div class="banner" style="animation: bannerRise 1s ease forwards 4s;"><div class="name">Member 2</div><div class="number">115</div></div>
+      <div class="line"></div>
+      <div class="banner" style="animation: bannerRise 1s ease forwards 5s;"><div class="name">Member 3</div><div class="number">98</div></div>
+      <div class="line"></div>
+      <div class="banner" style="animation: bannerRise 1s ease forwards 6s;"><div class="name">Member 4</div><div class="number">94</div></div>
+      <div class="line"></div>
+      <div class="banner" style="animation: bannerRise 1s ease forwards 7s;"><div class="name">Member 5</div><div class="number">80</div></div>
+      <div class="line"></div>
+      <div class="banner" style="animation: bannerRise 1s ease forwards 8s;"><div class="name">Member 6</div><div class="number">74</div></div>
+      <div class="line"></div>
+      <div class="banner" style="animation: bannerRise 1s ease forwards 9s;"><div class="name">Member 7</div><div class="number">65</div></div>
+      <div class="line"></div>
+      <div class="banner" style="animation: bannerRise 1s ease forwards 10s;"><div class="name">Member 8</div><div class="number">52</div></div>
+      <div class="line"></div>
+      <div class="banner" style="animation: bannerRise 1s ease forwards 11s;"><div class="name">Member 9</div><div class="number">48</div></div>
+  </div>
 </div>
+
+<!-- PAGE 3 — TEAM SELMA -->
+<div class="page" id="page3">
+  <img class="side-image" src="https://imgur.com/BoS007V.png">
+  <div class="title-rectangle"><h2>Team Selma</h2></div>
+
+  <div class="banners">
+      <!-- SAME banners -->
+      <div class="banner" style="animation: bannerRise 1s ease forwards 3s;"><div class="name">Member 1</div><div class="number">120</div></div>
+      <div class="line"></div>
+      <div class="banner" style="animation: bannerRise 1s ease forwards 4s;"><div class="name">Member 2</div><div class="number">115</div></div>
+      <div class="line"></div>
+      <div class="banner" style="animation: bannerRise 1s ease forwards 5s;"><div class="name">Member 3</div><div class="number">98</div></div>
+      <div class="line"></div>
+      <div class="banner" style="animation: bannerRise 1s ease forwards 6s;"><div class="name">Member 4</div><div class="number">94</div></div>
+      <div class="line"></div>
+      <div class="banner" style="animation: bannerRise 1s ease forwards 7s;"><div class="name">Member 5</div><div class="number">80</div></div>
+      <div class="line"></div>
+      <div class="banner" style="animation: bannerRise 1s ease forwards 8s;"><div class="name">Member 6</div><div class="number">74</div></div>
+      <div class="line"></div>
+      <div class="banner" style="animation: bannerRise 1s ease forwards 9s;"><div class="name">Member 7</div><div class="number">65</div></div>
+      <div class="line"></div>
+      <div class="banner" style="animation: bannerRise 1s ease forwards 10s;"><div class="name">Member 8</div><div class="number">52</div></div>
+      <div class="line"></div>
+      <div class="banner" style="animation: bannerRise 1s ease forwards 11s;"><div class="name">Member 9</div><div class="number">48</div></div>
+  </div>
+</div>
+
+
+<script>
+  let currentPage = 1;
+
+  setInterval(() => {
+    document.getElementById("page" + currentPage).classList.remove("activePage");
+
+    currentPage++;
+    if (currentPage > 3) currentPage = 1;
+
+    document.getElementById("page" + currentPage).classList.add("activePage");
+  }, 10000); // 10 seconds per page
+</script>
 
 </body>
 </html>
