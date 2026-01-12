@@ -30,57 +30,63 @@ body {
   100% { background-position: 0% 50%; }
 }
 
-/* ===== CONTAINER ===== */
+/* ===== CONTAINER (BIGGER) ===== */
 .container {
-  background: rgba(0, 0, 0, 0.55);
-  border-radius: 25px;
-  padding: 40px 60px;
+  background: rgba(0, 0, 0, 0.60);
+  border-radius: 40px;
+  padding: 70px 80px;
   color: #fff;
-  width: 90%;
-  max-width: 1600px;
+  width: 95%;
+  height: 95%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
 }
 
-/* ===== TITLES ===== */
+/* ===== TITLES (BIGGER) ===== */
 h1 {
   text-align: center;
-  font-size: 70px;
-  margin-bottom: 30px;
+  font-size: 110px;
+  margin-bottom: 40px;
   text-transform: uppercase;
+  letter-spacing: 4px;
 }
 
 .section {
-  margin-bottom: 50px;
+  margin-bottom: 60px;
 }
 
-/* ===== KPI ===== */
+/* ===== KPI GRID ===== */
 .kpis {
   display: flex;
-  gap: 40px;
+  gap: 60px;
   justify-content: center;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
 }
 
+/* ===== KPI BLOCK ===== */
 .kpi {
-  border-radius: 20px;
-  padding: 35px 45px;
-  min-width: 280px;
+  border-radius: 30px;
+  padding: 60px 70px;
+  min-width: 420px;
   text-align: center;
 }
 
-/* DEFAULT (TARGET & RULES) */
+/* DEFAULT */
 .kpi.default {
-  background: rgba(255,255,255,0.15);
+  background: rgba(255,255,255,0.18);
 }
 
 .kpi-title {
-  font-size: 30px;
-  margin-bottom: 15px;
+  font-size: 45px;
+  margin-bottom: 30px;
   text-transform: uppercase;
+  letter-spacing: 2px;
 }
 
 .kpi-value {
-  font-size: 65px;
-  font-weight: bold;
+  font-size: 120px;
+  font-weight: 900;
 }
 
 /* ===== SPECIAL COLORS ===== */
@@ -92,15 +98,15 @@ h1 {
   background: #d62828;
 }
 
-/* INPUT STYLE */
+/* ===== INPUT (VERY BIG) ===== */
 input {
   background: transparent;
   border: none;
   color: #fff;
-  font-size: 65px;
-  font-weight: bold;
+  font-size: 120px;
+  font-weight: 900;
   text-align: center;
-  width: 180px;
+  width: 260px;
   outline: none;
 }
 </style>
@@ -127,7 +133,7 @@ input {
 
       <div class="kpi reste">
         <div class="kpi-title">Reste à faire</div>
-        <div class="kpi-value" id="reste">380</div>
+        <div class="kpi-value" id="reste">387</div>
       </div>
     </div>
   </div>
