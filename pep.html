@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Incentives TV</title>
+
+<style>
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  font-family: Arial, sans-serif;
+  overflow: hidden;
+}
+
+/* ===== BACKGROUND ===== */
+body {
+  background: linear-gradient(270deg, #ff416c, #ff4b2b, #1fa2ff, #12d8fa, #a6ffcb);
+  background-size: 1000% 1000%;
+  animation: gradientMove 15s ease infinite;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@keyframes gradientMove {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* ===== CONTAINER (BIGGER) ===== */
+.container {
+  background: rgba(0, 0, 0, 0.60);
+  border-radius: 40px;
+  padding: 70px 80px;
+  color: #fff;
+  width: 95%;
+  height: 95%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+
+/* ===== TITLES (BIGGER) ===== */
+h1 {
+  text-align: center;
+  font-size: 110px;
+  margin-bottom: 40px;
+  text-transform: uppercase;
+  letter-spacing: 4px;
+}
+
+.section {
+  margin-bottom: 60px;
+}
+
+/* ===== KPI GRID ===== */
+.kpis {
+  display: flex;
+  gap: 60px;
+  justify-content: center;
+  flex-wrap: nowrap;
+}
+
+/* ===== KPI BLOCK ===== */
+.kpi {
+  border-radius: 30px;
+  padding: 60px 70px;
+  min-width: 420px;
+  text-align: center;
+}
+
+/* DEFAULT */
+.kpi.default {
+  background: rgba(255,255,255,0.18);
+}
+
+.kpi-title {
+  font-size: 45px;
+  margin-bottom: 30px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+.kpi-value {
+  font-size: 120px;
+  font-weight: 900;
+}
+
+/* ===== SPECIAL COLORS ===== */
+.kpi.realise {
+  background: #1fa84f;
+}
+
+.kpi.reste {
+  background: #d62828;
+}
+
+/* ===== INPUT (VERY BIG) ===== */
+input {
+  background: transparent;
+  border: none;
+  color: #fff;
+  font-size: 120px;
+  font-weight: 900;
+  text-align: center;
+  width: 260px;
+  outline: none;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+  <!-- INCENTIVE FEVRIER -->
+  <div class="section">
+    <h1>Incentive FEVRIER (2000 DHS)</h1>
+
+    <div class="kpis">
+      <div class="kpi default">
+        <div class="kpi-title">Target</div>
+        <div class="kpi-value">40</div>
+      </div>
+
+      <div class="kpi realise">
+        <div class="kpi-title">Réalisé</div>
+        <input type="number" id="realise" value="11">
+      </div>
+
+      <div class="kpi reste">
+        <div class="kpi-title">Reste à faire</div>
+        <div class="kpi-value" id="reste">40</div>
+      </div>
+
+
+    </div>
+  </div>
+
+  <!-- CHALLENGE INDIVIDUEL -->
+  <div class="section">
+    <h1>CHALLENGE individuel</h1>
+
+    <div class="kpis">
+      <div class="kpi default">
+        <div class="kpi-title">20 Services</div>
+        <div class="kpi-value">500</div>
+      </div>
+
+      <div class="kpi default">
+        <div class="kpi-title">25 services</div>
+        <div class="kpi-value">1000</div>
+      </div>
+       <div class="kpi default">
+        <div class="kpi-title">30 services</div>
+        <div class="kpi-value">1600</div>
+      </div>
+       <div class="kpi default">
+        <div class="kpi-title">35 services</div>
+        <div class="kpi-value">2300</div>
+      </div>
+
+      <div class="kpi default">
+        <div class="kpi-title">40 services</div>
+        <div class="kpi-value">3000</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+const target = 300;
+const realiseInput = document.getElementById("realise");
+const resteEl = document.getElementById("reste");
+
+function updateReste() {
+  let realise = Number(realiseInput.value) || 0;
+  let reste = target - realise;
+  resteEl.textContent = reste < 0 ? 0 : reste;
+}
+
+realiseInput.addEventListener("input", updateReste);
+updateReste();
+</script>
+
+</body>
+</html>
