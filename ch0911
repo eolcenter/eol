@@ -194,7 +194,7 @@ svg.defs{position:absolute;width:0;height:0}
   "lotsGagnes": [],
   "agents": [
     {"nom": "SELMA CHEGDAL", "ventes": 10},
-    {"nom": "HAYAT ELRHERBI", "ventes": 0},
+    {"nom": "HAYAT ELRHERBI", "ventes": 10},
     {"nom": "ABDELHALIM MARBATI", "ventes": 0},
     {"nom": "SARA DIFTAR", "ventes": 0},
     {"nom": "YASSINE BOUDAHIR", "ventes": 0},
