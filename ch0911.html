@@ -307,7 +307,7 @@ function parseCfg(txt){
   c.objectif = Number(c.objectif) || 25;
   c.dureeSlide = Number(c.dureeSlide) || 10;
   c.rafraichissement = Math.max(5, Number(c.rafraichissement) || 15);
-  c.lotsGagnes = c.lotsGagnes || [];
+  c.lotsGagnes = c.lotsGagnes || [6];
   return c;
 }
 var errEl = document.getElementById('err');
