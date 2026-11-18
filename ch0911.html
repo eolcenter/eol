@@ -66,6 +66,46 @@ svg.defs{position:absolute;width:0;height:0}
  repeating-linear-gradient(90deg,transparent 0,transparent calc(20% - 2px),rgba(255,255,255,.28) calc(20% - 2px),rgba(255,255,255,.28) 20%)}
 .row.done .tube .fill{animation:goldpulse 1.6s ease-in-out infinite}
 @keyframes goldpulse{0%,100%{filter:brightness(1)}50%{filter:brightness(1.25)}}
+
+/* =====================  DIAPORAMA (transition entre les pages)  ===================== */
+.slide{transition:opacity .8s ease,visibility 0s linear 0s}
+.slide.hide{opacity:0;visibility:hidden;transition:opacity .8s ease,visibility 0s linear .8s}
+
+/* =====================  PAGE 2 : CHALLENGE EOL  ===================== */
+.s4{background:radial-gradient(ellipse at 50% 0,#3d1675 0,#1b0a3b 55%,#0b0419 100%)}
+.s4 .grid3d{position:absolute;left:-200px;right:-200px;bottom:-300px;height:900px;opacity:.16;
+ background:linear-gradient(rgba(255,120,220,.8) 1px,transparent 1px) 0 0/100% 60px,linear-gradient(90deg,rgba(255,120,220,.8) 1px,transparent 1px) 0 0/80px 100%;
+ transform:perspective(600px) rotateX(62deg);-webkit-mask-image:linear-gradient(transparent,#000);mask-image:linear-gradient(transparent,#000)}
+.s4 h1{position:absolute;left:0;right:0;top:22px;text-align:center;font-size:72px;font-weight:900;line-height:1.1;letter-spacing:2px}
+.s4 h1 span{color:#ffd23f}
+.panel{position:absolute;top:140px;width:870px;height:900px;border-radius:40px;padding:26px 30px;display:flex;flex-direction:column;
+ background:rgba(255,255,255,.06);border:2px solid var(--pc);box-shadow:0 0 44px var(--pg),inset 0 0 40px rgba(255,255,255,.04)}
+.panel.p1{left:60px;--pc:rgba(255,210,63,.65);--pg:rgba(255,210,63,.22)}
+.panel.p2{left:990px;--pc:rgba(110,200,255,.65);--pg:rgba(110,200,255,.22)}
+.ptitle{flex:none;height:86px;border-radius:44px;display:flex;align-items:center;justify-content:center;font-size:48px;font-weight:800;letter-spacing:1px;
+ background:rgba(255,255,255,.09);margin-bottom:8px}
+.p1 .ptitle{color:#ffd23f}
+.p2 .ptitle{color:#7fd4ff}
+.prow{flex:1;display:flex;align-items:center}
+.plabel{flex:none;width:210px;font-size:38px;font-weight:700;color:#d6e2ff}
+.cards{flex:none;display:flex;gap:14px;align-items:center}
+.unit{flex:none;margin-left:22px;font-size:28px;font-weight:600;color:#a9bdd6}
+.dcard{position:relative;width:118px;height:160px;border-radius:24px;
+ background:linear-gradient(160deg,var(--c1),var(--c2));
+ box-shadow:0 10px 0 var(--c3),0 22px 26px rgba(0,0,0,.55),inset 0 3px 5px rgba(255,255,255,.55),inset 0 -6px 10px rgba(0,0,0,.25);
+ transform:perspective(500px) rotateX(9deg)}
+.dcard .win{position:absolute;left:10px;right:10px;top:10px;bottom:10px;border-radius:16px;overflow:hidden;
+ background:rgba(0,0,0,.3);box-shadow:inset 0 4px 8px rgba(0,0,0,.65)}
+.dcard .win::after{content:"";position:absolute;left:0;right:0;top:0;bottom:0;pointer-events:none;
+ background:linear-gradient(rgba(0,0,0,.6),transparent 30%,transparent 70%,rgba(0,0,0,.6))}
+.dcard .strip{position:absolute;left:0;right:0;top:0;will-change:transform}
+.dcard .strip span{display:flex;align-items:center;justify-content:center;height:140px;font-size:112px;font-weight:900;line-height:1;color:#fff;
+ text-shadow:0 4px 0 rgba(0,0,0,.35),0 0 22px rgba(255,255,255,.45)}
+.dcard.spinning .strip{filter:blur(1.4px)}
+.cards.many .dcard{width:98px}
+.cards.many .dcard .strip span{font-size:92px}
+@keyframes land{0%{transform:perspective(500px) rotateX(9deg) scale(1)}35%{transform:perspective(500px) rotateX(9deg) scale(1.1)}100%{transform:perspective(500px) rotateX(9deg) scale(1)}}
+.dcard.land{animation:land .5s ease}
 </style>
 </head>
 <body>
@@ -75,6 +115,8 @@ svg.defs{position:absolute;width:0;height:0}
   ║  COMMENT MODIFIER LES SCORES (sans actualiser la télé)       ║
   ║  1. Sur GitHub, ouvrir index.html puis cliquer sur le crayon ║
   ║  2. Modifier "ventes" de chaque agent dans le bloc ci-dessous║
+  ║     Page 2 : modifier "challenge" (objectif / realise)       ║
+  ║     "dureeDiapo" = secondes d'affichage de chaque page       ║
   ║  3. Commit changes -> la télé se met à jour toute seule      ║
   ╚══════════════════════════════════════════════════════════════╝
 -->
@@ -83,20 +125,27 @@ svg.defs{position:absolute;width:0;height:0}
   "objectif": 25,
   "rafraichissement": 15,
   "trierParScore": true,
+  "dureeDiapo": 15,
+  "challenge": {
+    "elite":     {"objectif": 300, "realise": 39},
+    "potentiel": {"objectif": 300, "realise": 21}
+  },
   "agents": [
-    {"nom": "SELMA CHEGDAL", "ventes": 17},
-    {"nom": "HAYAT ELRHERBI", "ventes": 6},
-    {"nom": "ABDELHALIM MARBATI", "ventes": 9},
+    {"nom": "SELMA CHEGDAL", "ventes": 22},
+    {"nom": "HAYAT ELRHERBI", "ventes": 7},
+    {"nom": "ABDELHALIM MARBATI", "ventes": 10},
     {"nom": "SARA DIFTAR", "ventes": 14},
-    {"nom": "YASSINE BOUDAHIR", "ventes": 4},
-    {"nom": "SOUFIANE ETTANANI", "ventes": 9},
+    {"nom": "YASSINE BOUDAHIR", "ventes": 7},
+	{"nom": "ADIL HAFFAD", "ventes": 1},
+    {"nom": "SOUFIANE ETTANANI", "ventes": 12},
     {"nom": "DIOP SENY", "ventes": 5},
-    {"nom": "MAZER HASSAN", "ventes": 11},
+    {"nom": "MAZER HASSAN", "ventes": 12},
+	{"nom": "SAAD DIAMI", "ventes": 1},
     {"nom": "ILHAM ABOUTALEB EL IDRISSI", "ventes": 3},
     {"nom": "BADR HILMI", "ventes": 6},
-    {"nom": "SAAD DIAMI", "ventes": 1},
+    {"nom": "ADDI LAMIAA", "ventes": 1},
     {"nom": "GHISLAINE BENABOUD", "ventes": 7},
-    {"nom": "NAOUFAL BENDARI", "ventes": 10},
+    {"nom": "NAOUFAL BENDARI", "ventes": 9},
     {"nom": "AKAFOU FRANCK ARNAUD", "ventes": 6},
     {"nom": "KHALIL ELBOUHALI", "ventes": 1}
   ]
@@ -129,6 +178,11 @@ svg.defs{position:absolute;width:0;height:0}
     <div class="sub" id="subAg"></div>
     <div class="total"><b id="totN">0</b><span>ventes au total</span></div>
     <div id="rows"></div>
+  </section>
+  <section class="slide s4 hide" id="s4">
+    <div class="grid3d"></div>
+    <h1>Challenge <span>du 17 au 30/11/2026</span></h1>
+    <div id="chHost"></div>
   </section>
   <div id="err" title="Erreur dans le bloc de configuration"></div>
 </div>
@@ -277,6 +331,127 @@ try{ applyConfig(parseCfg(document.getElementById('config').textContent), true);
 catch(e){ errEl.classList.add('show'); }
 setInterval(refresh, ((CFG && CFG.rafraichissement) || 15) * 1000);
 setTimeout(refresh, 3000);
+</script>
+
+<script>
+/* =====================  PAGE 2 : CHALLENGE du 17 au 30/11/2026 + DIAPORAMA  ===================== */
+(function(){
+  var s3 = document.getElementById('s3'), s4 = document.getElementById('s4'), host = document.getElementById('chHost');
+  var H = 140;      /* hauteur d'un chiffre dans la fenêtre */
+  var CYC = 4;      /* nombre de cycles 0-9 dans la bande */
+  var LAND = 2;     /* cycle sur lequel la roue s'arrête */
+
+  /* palettes de cartes 3D : [clair, moyen, ombre] */
+  var ROWS = [
+    {k:'objectif', l:'Objectif', pal:[['#6fd0ff','#1f6fe0','#0b3a8a'],['#cf99ff','#7a2fe0','#41168a'],['#66f5e2','#0fa6a0','#066461']]},
+    {k:'realise',  l:'Réalisé',  pal:[['#97ff93','#1fb53a','#0b6a1e'],['#eaff80','#8fc61a','#4f7506'],['#6ff0b8','#0fa86a','#06603a']]},
+    {k:'raf',      l:'RAF',      pal:[['#ffd870','#ff8a1f','#a14a00'],['#ff9393','#e0283a','#7a0f1c'],['#ffa3dd','#e0359f','#7a1456']]}
+  ];
+  var TEAMS = [
+    {k:'elite',     t:'Équipe Elite',     cls:'p1', off:0},
+    {k:'potentiel', t:'Équipe Potentiel', cls:'p2', off:1}
+  ];
+
+  function mk(tag, cls, txt){ var e = document.createElement(tag); if(cls) e.className = cls; if(txt) e.textContent = txt; return e; }
+  function num(v, d){ v = Number(v); return isFinite(v) ? Math.max(0, Math.round(v)) : d; }
+
+  /* valeurs lues dans la config (RAF = objectif - réalisé, calculé automatiquement) */
+  function valuesOf(team){
+    var c = (CFG && CFG.challenge && CFG.challenge[team.k]) || {};
+    var o = num(c.objectif, 300), r = num(c.realise, 30);
+    return {objectif:o, realise:r, raf:Math.max(0, o - r)};
+  }
+
+  /* construction des deux colonnes */
+  TEAMS.forEach(function(team){
+    var p = mk('div', 'panel ' + team.cls);
+    p.appendChild(mk('div', 'ptitle', team.t));
+    team.rows = ROWS.map(function(rw){
+      var row = mk('div', 'prow');
+      row.appendChild(mk('div', 'plabel', rw.l));
+      var cards = mk('div', 'cards');
+      row.appendChild(cards);
+      row.appendChild(mk('div', 'unit', 'services'));
+      p.appendChild(row);
+      return {cards:cards, reels:[], n:0, key:rw.k};
+    });
+    host.appendChild(p);
+  });
+
+  function buildCards(ro, rIdx, team, n){
+    ro.cards.innerHTML = ''; ro.reels = []; ro.n = n;
+    ro.cards.classList.toggle('many', n > 3);
+    var pal = ROWS[rIdx].pal;
+    for(var i=0;i<n;i++){
+      var col = pal[(i + team.off) % pal.length];
+      var card = mk('div', 'dcard');
+      card.style.setProperty('--c1', col[0]); card.style.setProperty('--c2', col[1]); card.style.setProperty('--c3', col[2]);
+      var win = mk('div', 'win'), strip = mk('div', 'strip');
+      for(var c=0;c<CYC*10;c++) strip.appendChild(mk('span', '', String(c % 10)));
+      win.appendChild(strip); card.appendChild(win); ro.cards.appendChild(card);
+      ro.reels.push({card:card, strip:strip, t:null});
+    }
+  }
+
+  /* effet machine à sous : la roue tourne puis s'arrête sur le chiffre voulu */
+  function place(ro, digits, anim, baseDelay){
+    for(var i=0;i<ro.reels.length;i++){
+      (function(i){
+        var rl = ro.reels[i], st = rl.strip.style, d = digits[i];
+        var endY = -((LAND * 10 + d) * H);
+        clearTimeout(rl.t); clearTimeout(rl.t2);
+        rl.card.classList.remove('spinning'); rl.card.classList.remove('land');
+        if(!anim){ st.transition = 'none'; st.transform = 'translateY(' + endY + 'px)'; return; }
+        st.transition = 'none'; st.transform = 'translateY(0px)';
+        void rl.strip.offsetHeight;
+        var dur = 2300 + i * 550, dl = baseDelay + i * 220;
+        st.transition = 'transform ' + dur + 'ms cubic-bezier(.12,.72,.18,1) ' + dl + 'ms';
+        st.transform = 'translateY(' + endY + 'px)';
+        rl.t = setTimeout(function(){ rl.card.classList.add('spinning'); }, dl);
+        rl.t2 = setTimeout(function(){ rl.card.classList.remove('spinning'); void rl.card.offsetWidth; rl.card.classList.add('land'); }, dl + dur - 150);
+      })(i);
+    }
+  }
+
+  var lastSig = '';
+  function render(anim){
+    TEAMS.forEach(function(team){
+      var v = valuesOf(team);
+      team.rows.forEach(function(ro, rIdx){
+        var val = v[ro.key], s = String(val);
+        if(s.length !== ro.n) buildCards(ro, rIdx, team, s.length);
+        place(ro, s.split('').map(Number), anim, 300 + rIdx * 350);
+      });
+    });
+    lastSig = sigOf();
+  }
+  function sigOf(){
+    return JSON.stringify(TEAMS.map(function(t){ return valuesOf(t); }));
+  }
+
+  /* ---------- diaporama : 15 s par page ---------- */
+  var cur = 0;
+  function go(i){
+    cur = i;
+    s3.classList.toggle('hide', i !== 0);
+    s4.classList.toggle('hide', i !== 1);
+    if(i === 1) render(true);
+    else if(typeof replayGauges === 'function') replayGauges();
+  }
+  function schedule(){
+    var sec = (CFG && Number(CFG.dureeDiapo)) || 15;
+    setTimeout(function(){ go(1 - cur); schedule(); }, Math.max(5, sec) * 1000);
+  }
+
+  /* si les chiffres changent dans la config, la page 2 se met à jour toute seule */
+  setInterval(function(){
+    var s = sigOf();
+    if(s !== lastSig){ render(cur === 1); }
+  }, 2000);
+
+  render(false);
+  schedule();
+})();
 </script>
 </body>
 </html>
